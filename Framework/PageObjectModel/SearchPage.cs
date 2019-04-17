@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading.Tasks;
 using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 
@@ -13,13 +14,13 @@ namespace RestaurantSearch.UITests.Framework.PageObjectModel
         [FindsBy(How = How.Name, Using = "postcode")]
         public IWebElement PostcodeSearchInput { get; set; }
 
-        [FindsBy(How = How.ClassName, Using = "o-btn--primary")]
+        [FindsBy(How = How.CssSelector, Using = "button[type='submit']")]
         public IWebElement SearchButton { get; set; }
 
-        [FindsBy(How = How.Id, Using = "nameSearch")]
+        [FindsBy(How = How.CssSelector, Using = "[data-test-id='searchInput']")]
         public IWebElement RestaurantSearchInput { get; set; }
 
-        [FindsBy(How = How.ClassName, Using = "c-serp__header")]
+        [FindsBy(How = How.CssSelector, Using = "[data-test-id='onlineRestaurantsHeading']")]
         public IWebElement RestaurantHeader { get; set; }
 
         //Initializing the registered driver to the page elements using PageFactory
@@ -40,14 +41,14 @@ namespace RestaurantSearch.UITests.Framework.PageObjectModel
             searchType.SendKeys(input);
         }
 
-        public string FindInPage()
-        {
-            Thread.Sleep(3000);
-            var header = RestaurantHeader.FindElement(By.TagName("h1"));
-            var subHeaderTxt = header.Text;
+        private string FindInPage() =>  RestaurantHeader.Text;
 
-            return subHeaderTxt;
+        public  string GetRestaurantHeader()
+        {
+            return  new ValidationHelper().Validate(FindInPage, "535",
+                TimeSpan.FromSeconds(5), 8);
         }
+        
         //Including IWebElement parameter to Click in other areas in the test journey
         public void Click(IWebElement searchOn)
         {

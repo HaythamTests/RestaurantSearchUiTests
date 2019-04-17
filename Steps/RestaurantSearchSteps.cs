@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Diagnostics.Tracing;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using RestaurantSearch.UITests.Framework;
 using RestaurantSearch.UITests.Framework.PageObjectModel;
@@ -27,21 +28,20 @@ namespace RestaurantSearch.UITests.Steps
         [AfterScenario]
         public void AfterScenario()
         {
-            _driver.Quit();
+            _driver.Close();
         }
         //Reusable test steps with one or more methods
-        [Given(@"I want food in (.*)")]
+        [Given(@"I want food in area (.*)")]
         public void GivenIWantFoodIn(string input)
         {
+            StateManager.Set(SearchValues.Postcode.ToString(), input);
+
             //Navigation to the page
             _searchPage.Navigate();
 
             //Search by Postcode and submit
             _searchPage.Search(_searchPage.PostcodeSearchInput, input);
-            _searchPage.SearchButton.Click();
-
-            //Selecting 'All Restaurants' from pop up
-            _searchPage.SearchButton.Click();
+            _searchPage.SearchButton.Click();      
         }
 
         [When(@"I search for (.*)")]
@@ -51,10 +51,10 @@ namespace RestaurantSearch.UITests.Steps
             _searchPage.Search(_searchPage.RestaurantSearchInput, restaurant);
 
             //Find subheader associated to search
-            var subHeaderText = _searchPage.FindInPage();
+            var subHeaderText = _searchPage.GetRestaurantHeader();
 
             //Saving results to StateManager
-            StateManager.Save(restaurant, subHeaderText);
+            StateManager.Set(SearchValues.RestaurantSubHeader.ToString(), subHeaderText);
         }
 
         [When(@"I change the area to (.*) using the 'Change Location' button")]
@@ -69,10 +69,10 @@ namespace RestaurantSearch.UITests.Steps
         }
 
         [Then(@"I should see some (.*) in (.*)")]
-        public void ThenIShouldSeeSomeRestaurantsIn(string restaurant, string expectedPostcode)
+        public void ThenIShouldSeeSomeRestaurantsIn(string expectedPostcode)
         {
             //Assertion on positive results
-            var actualSubheaderforRestaurant = StateManager.Get(restaurant);
+            var actualSubheaderforRestaurant = StateManager.Get<string>(SearchValues.Postcode.ToString());
 
             Assert.That(actualSubheaderforRestaurant.Contains(expectedPostcode));
         }
@@ -81,9 +81,9 @@ namespace RestaurantSearch.UITests.Steps
         public void ThenIShouldntSeeSomeRestaurantsIn(string restaurant, string errorMessage)
         {
             //Assertion on error result
-            var actualSubheaderforRestaurant = StateManager.Get(restaurant);
+            var actualSubheaderforRestaurant = StateManager.Get<string>(SearchValues.RestaurantSubHeader.ToString());
 
-            Assert.That(actualSubheaderforRestaurant.Equals(errorMessage));
+            Assert.That(actualSubheaderforRestaurant.Contains(errorMessage));
         }
     }
 }

@@ -4,16 +4,16 @@ namespace RestaurantSearch.UITests.Framework
 {
     public static class StateManager
     {   
-        //Saving results using the ScenarioContext feature
-        public static void Save(string restaurant, string headerText)
+        //Getting results from the ScenarioContext for the Assertion purpose
+        public static T Get<T>(string key)
         {
-            ScenarioContext.Current[restaurant] = headerText;
+            return (T) ScenarioContext.Current[key];
         }
 
-        //Getting results from the ScenarioContext for the Assertion purpose
-        public static string Get(string restaurant)
+        //Saving results using the ScenarioContext feature
+        public static void Set(string key, object value)
         {
-            return ScenarioContext.Current[restaurant].ToString();
+            ScenarioContext.Current[key] = value;
         }
     }
 }
