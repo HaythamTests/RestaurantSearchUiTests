@@ -21,7 +21,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>RestaurantSearch.feature</DependentUpon>
     </Compile>
-    <Compile Update="Steps\RestaurantSearchSteps.cs">
+    <Compile Update="Steps\Original.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Steps\SearchPage.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

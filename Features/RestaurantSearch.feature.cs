@@ -79,7 +79,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 8
    testRunner.Given("I want food in area AR51 1AA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
-   testRunner.When(string.Format("I search for {0}", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+   testRunner.When(string.Format("I search for restaurant {0}", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 10
    testRunner.Then(string.Format("I should see some {0} in AR51 1AA", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

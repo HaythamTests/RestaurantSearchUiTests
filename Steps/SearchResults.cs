@@ -1,50 +1,22 @@
-﻿using System.Diagnostics.Tracing;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using RestaurantSearch.UITests.Framework;
-using RestaurantSearch.UITests.Framework.PageObjectModel;
 using SeleniumExtras.PageObjects;
 using TechTalk.SpecFlow;
 
 namespace RestaurantSearch.UITests.Steps
 {
     [Binding]
-    public class RestaurantSearchSteps
+    public class SearchResultPages
     {
-        private readonly IWebDriver _driver;
-        private SearchPage _searchPage;
+        private readonly Framework.PageObjectModel.SearchPage _searchPage;
 
-        public RestaurantSearchSteps(IWebDriver driver)
+        public SearchResultPages(Framework.PageObjectModel.SearchPage searchPage)
         {
-            _driver = driver;
-        }
-        //Before Scenario: Initializing the driver with the page objects in Search page using PageFactory
-        [BeforeScenario]
-        public void BeforeScenario()
-        {
-            _searchPage= PageFactory.InitElements<SearchPage>(_driver);
-        }
-        //After Scenario: Closing driver after each test run
-        [AfterScenario]
-        public void AfterScenario()
-        {
-            _driver.Close();
-        }
-        //Reusable test steps with one or more methods
-        [Given(@"I want food in area (.*)")]
-        public void GivenIWantFoodIn(string input)
-        {
-            StateManager.Set(SearchValues.Postcode.ToString(), input);
-
-            //Navigation to the page
-            _searchPage.Navigate();
-
-            //Search by Postcode and submit
-            _searchPage.Search(_searchPage.PostcodeSearchInput, input);
-            _searchPage.SearchButton.Click();      
+            _searchPage = searchPage;
         }
 
-        [When(@"I search for (.*)")]
+        [When(@"I search for restaurant (.*)")]
         public void WhenISearchForRestaurants(string restaurant)
         {
             //Search by restaurant

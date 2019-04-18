@@ -6,7 +6,7 @@
 
 Scenario Outline: (Positive Scenario) Search for restaurant(s) in an area
  		Given I want food in area AR51 1AA
- 		When I search for <restaurants>
+ 		When I search for restaurant <restaurants>
  		Then I should see some <restaurants> in AR51 1AA
 Examples:
 | restaurants |
