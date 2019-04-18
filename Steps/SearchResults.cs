@@ -27,14 +27,14 @@ namespace RestaurantSearch.UITests.Steps
             //Restaurant search
             _searchPage.Search(_searchPage.RestaurantSearchInput, restaurant);
 
-            
-
             //Actual Subheader for the specified restaurant
             var subHeaderText = _searchPage.GetRestaurantHeader();
-
-            var something =  await _searchPage.SearchResults();
-            //Set test values
             StateManager.Set(SearchValues.RestaurantSubHeader.ToString(), subHeaderText);
+
+            //Return search results for the specified restaurant
+            var getSearchResults =  await _searchPage.SearchResults();
+            StateManager.Set(SearchValues.FirstSearchResult.ToString(), getSearchResults.First().Text);
+            StateManager.Set(SearchValues.LastSearchResult.ToString(), getSearchResults.Last().Text);
         }
     }
 }

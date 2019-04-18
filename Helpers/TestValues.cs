@@ -2,11 +2,12 @@
 namespace RestaurantSearch.UITests.Helpers
 {
     public enum SearchValues
-
     {
      Postcode,
      Restaurant,
      DefaultSubheaderForTotalRestaurants,
-     RestaurantSubHeader
+     RestaurantSubHeader,
+     FirstSearchResult,
+     LastSearchResult
     }
 }

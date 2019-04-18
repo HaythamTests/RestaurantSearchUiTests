@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using RestaurantSearch.UITests.Helpers;
 using TechTalk.SpecFlow;
 
@@ -37,9 +38,7 @@ namespace RestaurantSearch.UITests.Steps
         public void ThenIShouldSeeThePostcodeInTheSubheader()
         {
             var actualSubheaderforRestaurant = StateManager.Get<string>(SearchValues.RestaurantSubHeader.ToString());
-
             var expectedPostcode = StateManager.Get<string>(SearchValues.Postcode.ToString());
-
             var defaultHeaderForTotalRestaurants = StateManager.Get<string>(SearchValues.DefaultSubheaderForTotalRestaurants.ToString());
 
             Assert.That(actualSubheaderforRestaurant.Contains(expectedPostcode));
@@ -47,10 +46,15 @@ namespace RestaurantSearch.UITests.Steps
         }
 
 
-        [Then(@"the restaurant name is included in the search result")]
+        [Then(@"the restaurant name is included in the first and last search results")]
         public void ThenIShouldSeeTheRestaurantNameInTheSearhResult()
         {
+            var restaurant = StateManager.Get<string>(SearchValues.Restaurant.ToString());
+            var firstSearchResult = StateManager.Get<string>(SearchValues.FirstSearchResult.ToString());
+            var lastSearchResult = StateManager.Get<string>(SearchValues.LastSearchResult.ToString());
 
+            Assert.That(firstSearchResult.ContainsString(restaurant, StringComparison.OrdinalIgnoreCase));
+            Assert.That(lastSearchResult.ContainsString(restaurant, StringComparison.OrdinalIgnoreCase));
         }
 
 

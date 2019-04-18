@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using RestaurantSearch.UITests.Helpers;
@@ -25,7 +27,7 @@ namespace RestaurantSearch.UITests.Pages
         public IWebElement RestaurantHeader { get; set; }
 
         [FindsBy(How = How.CssSelector, Using = "section[class*='is-active'] a [data-test-id='restaurant_info'] [data-test-id='restaurant_name']")]
-        public IWebElement RestaurantSearchResults { get; set; }
+        public IList<IWebElement> RestaurantSearchResults { get; set; }
 
         //Initializing the registered driver to the page elements using PageFactory
         public SearchPage(IWebDriver driver)
@@ -47,12 +49,12 @@ namespace RestaurantSearch.UITests.Pages
 
         private string DefaultHeader() =>  RestaurantHeader.Text;
 
-        public Task<string> SearchResults() => Task.FromResult(RestaurantSearchResults.Text);
-
         public void StoreDefaultHeader() =>
             StateManager.Set(SearchValues.DefaultSubheaderForTotalRestaurants.ToString(), DefaultHeader());
 
-        public  string GetRestaurantHeader()
+        public Task<List<IWebElement>> SearchResults() => Task.FromResult(RestaurantSearchResults.ToList());
+
+        public string GetRestaurantHeader()
         {
             var totalRestaurants = StateManager.Get<string>(SearchValues.DefaultSubheaderForTotalRestaurants.ToString()).Split(new char[] { ' ' })[0];
 
