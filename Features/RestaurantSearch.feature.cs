@@ -98,7 +98,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 20
    testRunner.Given("I want food in area AR51 1AA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 21
-   testRunner.When(string.Format("I search for {0}", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+   testRunner.When(string.Format("I search for restaurant {0}", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 22
    testRunner.Then(string.Format("I shouldn\'t see the {0} and I see the error message No open restaurants", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -117,7 +117,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 30
    testRunner.Given("I want food in area AR51 1AA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 31
-   testRunner.When(string.Format("I search for {0}", invalidValues), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+   testRunner.When(string.Format("I search for restaurant {0}", invalidValues), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 32
    testRunner.Then(string.Format("I shouldn\'t see the {0} and I see the error message No open restaurants", invalidValues), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -138,11 +138,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 40
    testRunner.Given("I want food in area AR51 1AA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 41
-   testRunner.When(string.Format("I search for {0}", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+   testRunner.When(string.Format("I search for restaurant {0}", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 42
    testRunner.And("I change the area to W3 7JL using the \'Change Location\' button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 43
-  testRunner.And(string.Format("I search for {0}", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And(string.Format("I search for restaurant {0}", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 44
   testRunner.Then(string.Format("I should see some {0} in W3 7JL", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -161,11 +161,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 54
    testRunner.Given("I want food in area AR51 1AA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 55
-   testRunner.When(string.Format("I search for {0}", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+   testRunner.When(string.Format("I search for restaurant {0}", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 56
    testRunner.And("I change the area to W3 7JL using the \'Change Location\' button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 57
-  testRunner.And(string.Format("I search for {0}", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And(string.Format("I search for restaurant {0}", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 58
   testRunner.Then(string.Format("I shouldn\'t see the {0} and I see the error message No open restaurants", restaurants), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -184,11 +184,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 66
    testRunner.Given("I want food in area AR51 1AA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 67
-   testRunner.When(string.Format("I search for {0}", invalidValues), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+   testRunner.When(string.Format("I search for restaurant {0}", invalidValues), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 68
    testRunner.And("I change the area to W3 7JL using the \'Change Location\' button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 69
-  testRunner.And(string.Format("I search for {0}", invalidValues), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And(string.Format("I search for restaurant {0}", invalidValues), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 70
   testRunner.Then(string.Format("I shouldn\'t see the {0} and I see the error message No open restaurants", invalidValues), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
