@@ -1,6 +1,6 @@
-﻿using System;
-using RestaurantSearch.UITests.Framework;
+﻿using RestaurantSearch.UITests.Framework;
 using TechTalk.SpecFlow;
+using RestaurantSearch.UITests.Framework.PageObjectModel;
 
 namespace RestaurantSearch.UITests.Steps
 {
@@ -20,21 +20,17 @@ namespace RestaurantSearch.UITests.Steps
         {
             StateManager.Set(SearchValues.Restaurant.ToString(), restaurant);
 
-            StoreDefaultHeader();
+            //Default Subheader for all restaurants
+            _searchPage.StoreDefaultHeader();
 
             //Restaurant search
             _searchPage.Search(_searchPage.RestaurantSearchInput, restaurant);
 
-            //Subheader
+            //Actual Subheader for the specified restaurant
             var subHeaderText = _searchPage.GetRestaurantHeader();
 
             //Set test values
             StateManager.Set(SearchValues.RestaurantSubHeader.ToString(), subHeaderText);
-        }
-
-        private void StoreDefaultHeader()
-        {
-            throw new NotImplementedException();
         }
     }
 }

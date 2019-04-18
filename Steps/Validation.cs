@@ -33,14 +33,17 @@ namespace RestaurantSearch.UITests.Steps
         //    Assert.That(actualSubheaderforRestaurant.Contains(expectedRestaurantName));
         //}
 
-        [Then(@"I should see the correct postcode contained in the subheader")]
+        [Then(@"I should see the correct details in the subheader")]
         public void ThenIShouldSeeThePostcodeInTheSubheader()
         {
             var actualSubheaderforRestaurant = StateManager.Get<string>(SearchValues.RestaurantSubHeader.ToString());
 
             var expectedPostcode = StateManager.Get<string>(SearchValues.Postcode.ToString());
 
+            var defaultHeaderForTotalRestaurants = StateManager.Get<string>(SearchValues.DefaultSubheaderForTotalRestaurants.ToString());
+
             Assert.That(actualSubheaderforRestaurant.Contains(expectedPostcode));
+            Assert.AreNotEqual(actualSubheaderforRestaurant, defaultHeaderForTotalRestaurants) ;
         }
 
         //[Given(@"I should see the restaurant name contained in the subheader")]
