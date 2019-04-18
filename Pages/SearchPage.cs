@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using OpenQA.Selenium;
 using RestaurantSearch.UITests.Helpers;
 using SeleniumExtras.PageObjects;
@@ -46,7 +47,9 @@ namespace RestaurantSearch.UITests.Pages
 
         private string DefaultHeader() =>  RestaurantHeader.Text;
 
-      
+        public async Task<string> SearchResultsAsync() =>  RestaurantSearchResults.Text;
+
+
         public void StoreDefaultHeader() =>
             StateManager.Set(SearchValues.DefaultSubheaderForTotalRestaurants.ToString(), DefaultHeader());
 

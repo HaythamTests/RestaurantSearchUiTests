@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace RestaurantSearch.Helpers.Features
+namespace RestaurantSearch.UITests.Features
 {
     using TechTalk.SpecFlow;
     

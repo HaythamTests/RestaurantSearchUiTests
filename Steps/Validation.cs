@@ -46,6 +46,14 @@ namespace RestaurantSearch.UITests.Steps
             Assert.AreNotEqual(actualSubheaderforRestaurant, defaultHeaderForTotalRestaurants) ;
         }
 
+
+        [Then(@"the restaurant name is included in the search result")]
+        public void ThenIShouldSeeTheRestaurantNameInTheSearhResult()
+        {
+
+        }
+
+
         //[Given(@"I should see the restaurant name contained in the subheader")]
         //public void ThenIShouldntSeeSomeRestaurantsIn(string restaurant, string errorMessage)
         //{
