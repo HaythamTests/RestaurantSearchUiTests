@@ -29,15 +29,15 @@ namespace RestaurantSearch.UITests.Steps
         }
         //Search for postcode
         [Given(@"I want food in area (.*)")]
-        public void GivenIWantFoodIn(string input)
+        public void GivenIWantFoodIn(string postcode)
         {
-            StateManager.Set(SearchValues.Postcode.ToString(), input);
+            StateManager.Set(SearchValues.Postcode.ToString(), postcode);
 
             //Navigation to the page
             _searchPage.Navigate();
 
             //Search by Postcode and submit
-            _searchPage.Search(_searchPage.PostcodeSearchInput, input);
+            _searchPage.Search(_searchPage.PostcodeSearchInput, postcode);
             _searchPage.SearchButton.Click();
         }
     }

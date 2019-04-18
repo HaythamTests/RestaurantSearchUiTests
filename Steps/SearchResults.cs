@@ -1,4 +1,5 @@
-﻿using RestaurantSearch.UITests.Framework;
+﻿using System;
+using RestaurantSearch.UITests.Framework;
 using TechTalk.SpecFlow;
 
 namespace RestaurantSearch.UITests.Steps
@@ -17,14 +18,23 @@ namespace RestaurantSearch.UITests.Steps
         [When(@"I search for restaurant (.*)")]
         public void WhenISearchForRestaurants(string restaurant)
         {
-            //Search by restaurant
+            StateManager.Set(SearchValues.Restaurant.ToString(), restaurant);
+
+            StoreDefaultHeader();
+
+            //Restaurant search
             _searchPage.Search(_searchPage.RestaurantSearchInput, restaurant);
 
-            //Find subheader associated to search
+            //Subheader
             var subHeaderText = _searchPage.GetRestaurantHeader();
 
-            //Saving results to StateManager
+            //Set test values
             StateManager.Set(SearchValues.RestaurantSubHeader.ToString(), subHeaderText);
+        }
+
+        private void StoreDefaultHeader()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Linq;
 using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 
@@ -41,11 +41,17 @@ namespace RestaurantSearch.UITests.Framework.PageObjectModel
             searchType.SendKeys(input);
         }
 
-        private string FindInPage() =>  RestaurantHeader.Text;
+        private string DefaultHeader() =>  RestaurantHeader.Text;
+
+      
+        private void StoreDefaultHeader() =>
+            StateManager.Set(SearchValues.DefaultSubheaderForTotalRestaurants.ToString(), DefaultHeader());
 
         public  string GetRestaurantHeader()
         {
-            return  new ValidationHelper().Validate(FindInPage, "535",
+            var totalRestaurants = StateManager.Get<string>(SearchValues.DefaultSubheaderForTotalRestaurants.ToString()).Split(new char[] { ' ' })[0];
+
+            return  new ValidationHelper().Validate(DefaultHeader, totalRestaurants,
                 TimeSpan.FromSeconds(5), 8);
         }
         

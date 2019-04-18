@@ -6,11 +6,10 @@
 
 Scenario Outline: (Positive Scenario) Search for restaurant(s) in an area
  		Given I want food in area AR51 1AA
- 		When I search for restaurant <restaurants>
- 		Then I should see some <restaurants> in AR51 1AA
+ 		When I search for restaurant <restaurant>
+		Then I should see the correct postcode contained in the subheader
 Examples:
-| restaurants |
-|             |
+| restaurant |
 | Domino's    |
 | Papa Johns  |
 | KFC         |

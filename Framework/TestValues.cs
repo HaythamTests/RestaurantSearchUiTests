@@ -5,6 +5,8 @@ namespace RestaurantSearch.UITests.Framework
 
     {
      Postcode,
+     Restaurant,
+     DefaultSubheaderForTotalRestaurants,
      RestaurantSubHeader
     }
 }
