@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-using RestaurantSearch.UITests.Framework;
+using RestaurantSearch.UITests.Helpers;
 using SeleniumExtras.PageObjects;
 using TechTalk.SpecFlow;
 
@@ -9,7 +9,7 @@ namespace RestaurantSearch.UITests.Steps
     public class SearchPage
     {
         private readonly IWebDriver _driver;
-        private Framework.PageObjectModel.SearchPage _searchPage;
+        private Pages.SearchPage _searchPage;
 
         public SearchPage(IWebDriver driver)
         {
@@ -19,7 +19,7 @@ namespace RestaurantSearch.UITests.Steps
         [BeforeScenario]
         public void BeforeScenario()
         {
-            _searchPage = PageFactory.InitElements<Framework.PageObjectModel.SearchPage>(_driver);
+            _searchPage = PageFactory.InitElements<Pages.SearchPage>(_driver);
         }
         //After Scenario: clean up
         [AfterScenario]

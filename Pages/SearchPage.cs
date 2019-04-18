@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Linq;
 using OpenQA.Selenium;
+using RestaurantSearch.UITests.Helpers;
 using SeleniumExtras.PageObjects;
 
-namespace RestaurantSearch.UITests.Framework.PageObjectModel
+namespace RestaurantSearch.UITests.Pages
 {
     public class SearchPage
     {
@@ -22,6 +22,9 @@ namespace RestaurantSearch.UITests.Framework.PageObjectModel
 
         [FindsBy(How = How.CssSelector, Using = "[data-test-id='onlineRestaurantsHeading']")]
         public IWebElement RestaurantHeader { get; set; }
+
+        [FindsBy(How = How.CssSelector, Using = "section[class*='is-active'] a [data-test-id='restaurant_info'] [data-test-id='restaurant_name']")]
+        public IWebElement RestaurantSearchResults { get; set; }
 
         //Initializing the registered driver to the page elements using PageFactory
         public SearchPage(IWebDriver driver)

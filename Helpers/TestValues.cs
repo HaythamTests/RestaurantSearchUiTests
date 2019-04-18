@@ -1,5 +1,5 @@
 ﻿
-namespace RestaurantSearch.UITests.Framework
+namespace RestaurantSearch.UITests.Helpers
 {
     public enum SearchValues
 

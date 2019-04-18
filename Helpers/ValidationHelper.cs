@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace RestaurantSearch.UITests.Framework.PageObjectModel
+namespace RestaurantSearch.UITests.Helpers
 {
     public class ValidationHelper
     {

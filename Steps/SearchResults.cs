@@ -1,15 +1,14 @@
-﻿using RestaurantSearch.UITests.Framework;
+﻿using RestaurantSearch.UITests.Helpers;
 using TechTalk.SpecFlow;
-using RestaurantSearch.UITests.Framework.PageObjectModel;
 
 namespace RestaurantSearch.UITests.Steps
 {
     [Binding]
     public class SearchResultPages
     {
-        private readonly Framework.PageObjectModel.SearchPage _searchPage;
+        private readonly Pages.SearchPage _searchPage;
 
-        public SearchResultPages(Framework.PageObjectModel.SearchPage searchPage)
+        public SearchResultPages(Pages.SearchPage searchPage)
         {
             _searchPage = searchPage;
         }

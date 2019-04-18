@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using RestaurantSearch.UITests.Framework;
+using RestaurantSearch.UITests.Helpers;
 using TechTalk.SpecFlow;
 
 namespace RestaurantSearch.UITests.Steps
@@ -7,9 +7,9 @@ namespace RestaurantSearch.UITests.Steps
     [Binding]
     public class Valdiation
     {
-        private readonly Framework.PageObjectModel.SearchPage _searchPage;
+        private readonly Pages.SearchPage _searchPage;
 
-        public Valdiation(Framework.PageObjectModel.SearchPage searchPage)
+        public Valdiation(Pages.SearchPage searchPage)
         {
             _searchPage = searchPage;
         }
