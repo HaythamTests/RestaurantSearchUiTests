@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using RestaurantSearch.UITests.Helpers;
+using RestaurantSearch.UITests.Pages;
 using SeleniumExtras.PageObjects;
 using TechTalk.SpecFlow;
 
@@ -10,10 +11,12 @@ namespace RestaurantSearch.UITests.Steps
     {
         private readonly IWebDriver _driver;
         private Pages.SearchPage _searchPage;
+        private readonly SharedActions _sharedActions;
 
-        public SearchPage(IWebDriver driver)
+        public SearchPage(IWebDriver driver, SharedActions sharedActions)
         {
             _driver = driver;
+            _sharedActions = sharedActions;
         }
         //Before Scenario: start up
         [BeforeScenario]
@@ -37,7 +40,7 @@ namespace RestaurantSearch.UITests.Steps
             _searchPage.Navigate();
 
             //Search by Postcode and submit
-            _searchPage.Search(_searchPage.PostcodeSearchInput, postcode);
+            _sharedActions.Search(_searchPage.PostcodeSearchInput, postcode);
             _searchPage.SearchButton.Click();
         }
     }

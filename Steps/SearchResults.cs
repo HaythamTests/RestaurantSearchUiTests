@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using RestaurantSearch.UITests.Helpers;
+using RestaurantSearch.UITests.Pages;
 using TechTalk.SpecFlow;
 
 namespace RestaurantSearch.UITests.Steps
@@ -8,11 +9,13 @@ namespace RestaurantSearch.UITests.Steps
     [Binding]
     public class SearchResultPages
     {
-        private readonly Pages.SearchPage _searchPage;
+        private readonly SearchResultPage _searchResultPage;
+        private readonly SharedActions _sharedActions;
 
-        public SearchResultPages(Pages.SearchPage searchPage)
+        public SearchResultPages(SearchResultPage searchResultPage, SharedActions sharedActions)
         {
-            _searchPage = searchPage;
+            _searchResultPage = searchResultPage;
+            _sharedActions = sharedActions;
         }
 
         [Given(@"I search for restaurant (.*)")]
@@ -22,17 +25,17 @@ namespace RestaurantSearch.UITests.Steps
             StateManager.Set(SearchValues.Restaurant.ToString(), restaurant);
 
             //Default Subheader for all restaurants
-            _searchPage.StoreDefaultHeader();
+            _searchResultPage.StoreDefaultHeader();
 
             //Restaurant search
-            _searchPage.Search(_searchPage.RestaurantSearchInput, restaurant);
+            _sharedActions.Search(_searchResultPage.RestaurantSearchInput, restaurant);
 
             //Actual Subheader for the specified restaurant
-            var subHeaderText = _searchPage.GetRestaurantHeader();
+            var subHeaderText = _searchResultPage.GetRestaurantHeader();
             StateManager.Set(SearchValues.RestaurantSubHeader.ToString(), subHeaderText);
 
             //Return search results for the specified restaurant
-            var getSearchResults =  await _searchPage.SearchResults();
+            var getSearchResults =  await _searchResultPage.SearchResults();
             StateManager.Set(SearchValues.FirstSearchResult.ToString(), getSearchResults.First().Text);
             StateManager.Set(SearchValues.LastSearchResult.ToString(), getSearchResults.Last().Text);
         }

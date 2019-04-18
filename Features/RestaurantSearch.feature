@@ -3,17 +3,16 @@
  		As a hungry customer
  		I want to be able to find restaurants in my area
 
-
 Scenario Outline: (Positive Scenario) Search for restaurant(s) in an area
  		Given I want food in area AR51 1AA
  		When I search for restaurant <restaurant>
 		Then I should see the correct details in the subheader
 		And the restaurant name is included in the first and last search results
 Examples:
-| restaurant |
-| Domino's    |
-| Papa Johns  |
-| KFC         |
+| restaurant|
+| Domino's|
+| Papa Johns|
+| Kfc|
 
 
 Scenario Outline: (Negative Scenario) Unable to search for restaurant(s) in an area
