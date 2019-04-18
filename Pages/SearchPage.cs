@@ -47,8 +47,7 @@ namespace RestaurantSearch.UITests.Pages
 
         private string DefaultHeader() =>  RestaurantHeader.Text;
 
-        public async Task<string> SearchResultsAsync() =>  RestaurantSearchResults.Text;
-
+        public Task<string> SearchResults() => Task.FromResult(RestaurantSearchResults.Text);
 
         public void StoreDefaultHeader() =>
             StateManager.Set(SearchValues.DefaultSubheaderForTotalRestaurants.ToString(), DefaultHeader());
