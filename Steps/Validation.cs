@@ -54,15 +54,15 @@ namespace RestaurantSearch.UITests.Steps
         {
             var searchResultValidations = table.CreateSet<SearchResultValidations>();
 
-            foreach (var validation in searchResultValidations)
-            {
-                var hasValidation = await ValidationHelper.ValidateAsync(_searchResultPage.GetErrorMessagesFromSearchResultPage,
-                    ValidateErrorMessagesFromResultPage(validation), TimeSpan.FromSeconds(2));
-            }
+            //foreach (var validation in searchResultValidations)
+            //{
+            //    var hasValidation = await ValidationHelper.ValidateAsync(_searchResultPage.GetErrorMessagesFromSearchResultPage,
+            //        ValidateErrorMessagesFromResultPage(validation), TimeSpan.FromSeconds(2));
+            //}
 
-            var something = "f";
+            //var something = "f";
         }
 
-        private static Func<string, bool> ValidateErrorMessagesFromResultPage(SearchResultValidations validation) => validation.EmptySearchResultMessage.);
+        //private static Func<string, bool> ValidateErrorMessagesFromResultPage(SearchResultValidations validation) => validation.EmptySearchResultMessage.);
     }
 }
