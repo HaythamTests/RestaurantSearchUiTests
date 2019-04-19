@@ -77,7 +77,7 @@ namespace RestaurantSearch.UITests.Pages
             StateManager.Set(Result.LastSearchResult.ToString(), getSearchResults.Last().Text);
         }
 
-        public async Task GetErrorInformationFromSearchResultPageAsync()
+        public async Task GetOnscreenValidationsFromSearchResultPageAsync()
         {
             StateManager.Set(Result.EmptySearchResultMessage.ToString(), await EmptySearchResultMessage());
             StateManager.Set(Result.SearchButtonInvalidSearchText.ToString(), await SearchButtonInvalidSearchText());

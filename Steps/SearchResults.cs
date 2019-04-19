@@ -41,8 +41,8 @@ namespace RestaurantSearch.UITests.Steps
             }
             else
             {
-                //Save error information for the invalid search
-                await _searchResultPage.GetErrorInformationFromSearchResultPageAsync();
+                //Save on-screen validations for the invalid search
+                await _searchResultPage.GetOnscreenValidationsFromSearchResultPageAsync();
             }
         }
     }
