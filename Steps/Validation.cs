@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using RestaurantSearch.UITests.Helpers;
 using RestaurantSearch.UITests.Models;
-using RestaurantSearch.UITests.Pages;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -12,15 +10,6 @@ namespace RestaurantSearch.UITests.Steps
     [Binding]
     public class Validation
     {
-        private readonly SearchResultPage _searchResultPage;
-        private readonly SearchPage _searchPage;
-
-        public Validation(SearchPage searchPage, SearchResultPage searchResultPage)
-        {
-            _searchResultPage = searchResultPage;
-            _searchPage = searchPage;
-        }
-
         [Then(@"I should see the correct subheader details in the Search Results page")]
         public void ThenIShouldSeeThePostcodeInTheSubheader()
         {
@@ -45,10 +34,9 @@ namespace RestaurantSearch.UITests.Steps
         }
 
         [Then(@"I should see the error message")]
-        public async Task ThenIShouldSeeErrorMessage(Table table)
+        public void ThenIShouldSeeErrorMessage(Table table)
         {
             var searchResultValidations = table.CreateSet<SearchResultValidations>();
-            await _searchPage.GetErrorInformationFromSearchPageAsync();
 
             foreach (var validation in searchResultValidations)
             {
@@ -59,10 +47,9 @@ namespace RestaurantSearch.UITests.Steps
         }
 
         [Then(@"I should see the following texts and links on the page")]
-        public async Task ThenIShouldSeeErrorMessageAsync(Table table)
+        public void ThenIShouldSeeErrorMessageAsync(Table table)
         {
             var searchResultValidations = table.CreateSet<SearchResultValidations>();
-            await _searchResultPage.GetErrorInformationFromSearchResultPageAsync();
 
             foreach (var validation in searchResultValidations)
             {
