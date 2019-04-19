@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using RestaurantSearch.UITests.Helpers;
 using RestaurantSearch.UITests.Pages;
@@ -25,19 +26,27 @@ namespace RestaurantSearch.UITests.Steps
             StateManager.Set(SearchValues.Restaurant.ToString(), restaurant);
 
             //Default Subheader for all restaurants
-            _searchResultPage.StoreDefaultHeader();
+            _searchResultPage.StoreDefaultHeaderForGivenPostcode();
 
             //Restaurant search
             _sharedActions.Search(_searchResultPage.RestaurantSearchInput, restaurant);
 
             //Actual Subheader for the specified restaurant
-            var subHeaderText = _searchResultPage.GetRestaurantHeader();
+            var subHeaderText = await _searchResultPage.GetRestaurantHeaderAsync();
             StateManager.Set(SearchValues.RestaurantSubHeader.ToString(), subHeaderText);
 
-            //Return search results for the specified restaurant
-            var getSearchResults =  await _searchResultPage.SearchResults();
-            StateManager.Set(SearchValues.FirstSearchResult.ToString(), getSearchResults.First().Text);
-            StateManager.Set(SearchValues.LastSearchResult.ToString(), getSearchResults.Last().Text);
+            if (!subHeaderText.ContainsString("No open restaurants", StringComparison.OrdinalIgnoreCase))
+            {
+                //Return search results for the specified restaurant
+                var getSearchResults = await _searchResultPage.SearchResults();
+                StateManager.Set(SearchValues.FirstSearchResult.ToString(), getSearchResults.First().Text);
+                StateManager.Set(SearchValues.LastSearchResult.ToString(), getSearchResults.Last().Text);
+            }
+            else
+            {
+                var emptySearchResultMessage = await _searchResultPage.EmptySearchResultMessage();
+                StateManager.Set(SearchValues.EmptySearchResultMessage.ToString(), emptySearchResultMessage.Text);
+            }
         }
     }
 }

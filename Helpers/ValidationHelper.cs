@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace RestaurantSearch.UITests.Helpers
 {
-    public class ValidationHelper
+    public static class ValidationHelper
     {
-        public string Validate(Func<string> dataDelegate,
-            string validationDelegate,
+        public static async Task<string> ValidateAsync<T>(Func<Task<T>> dataDelegate,
+            Func<T> validationDelegate,
             TimeSpan interval, int retry = 5)
         {
             for (int i = 0; i < retry; i++)
             {
                 Thread.Sleep(interval);
 
-                var data =  dataDelegate();
-                if (!data.Contains(validationDelegate))
-                    return data;
+                var data = await dataDelegate();
+                if (!dataDelegate.ToString().Contains(validationDelegate.ToString()))
+                    return data.ToString();
                 else
                     Console.WriteLine($"Validation criteria not satisfied, retrying; attempt {i + 1}");
             }
 
             Console.WriteLine($"Validation; criteria was not met. Max retries reached {retry}");
 
-            return "fail";
+            return $"Validation; criteria was not met. Max retries reached {retry}";
         }
     }
 }

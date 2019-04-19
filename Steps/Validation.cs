@@ -1,20 +1,15 @@
 ﻿using System;
+using System.Linq;
 using NUnit.Framework;
 using RestaurantSearch.UITests.Helpers;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 
 namespace RestaurantSearch.UITests.Steps
 {
     [Binding]
     public class Valdiation
     {
-        private readonly Pages.SearchPage _searchPage;
-
-        public Valdiation(Pages.SearchPage searchPage)
-        {
-            _searchPage = searchPage;
-        }
-
         //[Given(@"I should see the restaurant name contained in the subheaderdfddf")]
         //public void ThenIShouldSeeSomeRestaurantsIn(string expectedPostcode)
         //{
@@ -39,7 +34,7 @@ namespace RestaurantSearch.UITests.Steps
         {
             var actualSubheaderforRestaurant = StateManager.Get<string>(SearchValues.RestaurantSubHeader.ToString());
             var expectedPostcode = StateManager.Get<string>(SearchValues.Postcode.ToString());
-            var defaultHeaderForTotalRestaurants = StateManager.Get<string>(SearchValues.DefaultSubheaderForTotalRestaurants.ToString());
+            var defaultHeaderForTotalRestaurants = StateManager.Get<string>(SearchValues.DefaultSubheaderForGivenPostcode.ToString());
 
             Assert.That(actualSubheaderforRestaurant.Contains(expectedPostcode));
             Assert.AreNotEqual(actualSubheaderforRestaurant, defaultHeaderForTotalRestaurants) ;
@@ -58,13 +53,24 @@ namespace RestaurantSearch.UITests.Steps
         }
 
 
-        //[Given(@"I should see the restaurant name contained in the subheader")]
-        //public void ThenIShouldntSeeSomeRestaurantsIn(string restaurant, string errorMessage)
-        //{
-        //    //Assertion on error result
-        //    var actualSubheaderforRestaurant = StateManager.Get<string>(SearchValues.RestaurantSubHeader.ToString());
+        [Then(@"I should see the message (.*)")]
+        public void ThenIShouldSeeErrorMessage(string errorMessage)
+        {
+            var actualErrorMessage = StateManager.Get<string>(SearchValues.ErrorMessageOnSearchPage.ToString());
 
-        //    Assert.That(actualSubheaderforRestaurant.Contains(errorMessage));
-        //}
+            Assert.AreEqual(errorMessage, actualErrorMessage);
+        }
+
+        [Then(@"I should see the following messages on the page")]
+        public void ThenIShouldSeeErrorMessage(Table table)
+        {
+            var searchResultValidations = table.CreateSet<SearchResultValidations>();
+
+            //var f = errorMessages.GetEnumerator<"">()
+
+            var actualErrorMessage = StateManager.Get<string>(SearchValues.ErrorMessageOnSearchPage.ToString());
+
+            //Assert.AreEqual(errorMessage, actualErrorMessage);
+        }
     }
 }

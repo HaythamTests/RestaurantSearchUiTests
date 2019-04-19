@@ -9,20 +9,22 @@ Scenario Outline: (Positive Scenario) Search for restaurant(s) in an area
 		Then I should see the correct details in the subheader
 		And the restaurant name is included in the first and last search results
 Examples:
-| restaurant|
-| Domino's|
-| Papa Johns|
-| Kfc|
+| restaurant |
+| Domino's   |
+| Papa Johns |
+| Kfc        |
 
+Scenario: (Negative Scenario) Invalid Postcode in Search page
+ 		Given I want food in area invalid
+		Then I should see the message Please enter a full, valid postcode
 
-Scenario Outline: (Negative Scenario) Unable to search for restaurant(s) in an area
+Scenario: (Negative Scenario) Invalid restaurant search in an area
  		Given I want food in area AR51 1AA
- 		When I search for restaurant <restaurants>
- 		Then I shouldn't see the <restaurants> and I see the error message No open restaurants
-Examples:
-| restaurants    |
-| Nando's        |
-| Persian Palace |
+ 		When I search for restaurant invalid
+		Then I should see the following messages on the page
+| Subheader             | EmptySearchResultMessage                                      |
+| "No open restaurants" | "We're coming up empty. Try casting your net a little wider." |
+
 
 
 Scenario Outline: Unable to search in an area using invalid values

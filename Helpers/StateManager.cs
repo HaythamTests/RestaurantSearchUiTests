@@ -1,4 +1,5 @@
-﻿using TechTalk.SpecFlow;
+﻿using System;
+using TechTalk.SpecFlow;
 
 namespace RestaurantSearch.UITests.Helpers
 {
@@ -11,7 +12,7 @@ namespace RestaurantSearch.UITests.Helpers
         }
 
         //Saving results using the ScenarioContext feature
-        public static void Set(string key, object value)
+        public static void Set<T>(string key, T value)
         {
             ScenarioContext.Current[key] = value;
         }

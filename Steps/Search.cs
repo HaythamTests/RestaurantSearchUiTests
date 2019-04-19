@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System.Threading.Tasks;
+using OpenQA.Selenium;
 using RestaurantSearch.UITests.Helpers;
 using RestaurantSearch.UITests.Pages;
 using SeleniumExtras.PageObjects;
@@ -32,7 +33,7 @@ namespace RestaurantSearch.UITests.Steps
         }
         //Search for postcode
         [Given(@"I want food in area (.*)")]
-        public void GivenIWantFoodIn(string postcode)
+        public async Task GivenIWantFoodIn(string postcode)
         {
             StateManager.Set(SearchValues.Postcode.ToString(), postcode);
 
@@ -42,6 +43,10 @@ namespace RestaurantSearch.UITests.Steps
             //Search by Postcode and submit
             _sharedActions.Search(_searchPage.PostcodeSearchInput, postcode);
             _searchPage.SearchButton.Click();
+
+            //Set error message
+            var errorMessage = await _searchPage.GetErrorMessage();
+            StateManager.Set(SearchValues.ErrorMessageOnSearchPage.ToString(), errorMessage.Text);
         }
     }
 }

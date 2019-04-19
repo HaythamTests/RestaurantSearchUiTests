@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System.Threading.Tasks;
+using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 
 namespace RestaurantSearch.UITests.Pages
@@ -15,16 +16,21 @@ namespace RestaurantSearch.UITests.Pages
         [FindsBy(How = How.CssSelector, Using = "button[type='submit']")]
         public IWebElement SearchButton { get; set; }
 
+        [FindsBy(How = How.CssSelector, Using = "[id='errorMessage']")]
+        public IWebElement ErrorMessage { get; set; }
+
         //Initializing the registered driver to the page elements using PageFactory
         public SearchPage(IWebDriver driver)
         {
             _driver = driver;
             PageFactory.InitElements(driver, this);
         }
-        //Re-Usable methods
+        //Navigate to page
         public void Navigate()
         {
             _driver.Navigate().GoToUrl(SearchUrl);
         }
+
+        public Task<IWebElement> GetErrorMessage() => Task.FromResult(ErrorMessage);
     }
 }

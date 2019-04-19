@@ -5,8 +5,10 @@ namespace RestaurantSearch.UITests.Helpers
     {
      Postcode,
      Restaurant,
-     DefaultSubheaderForTotalRestaurants,
+     ErrorMessageOnSearchPage,
+     DefaultSubheaderForGivenPostcode,
      RestaurantSubHeader,
+     EmptySearchResultMessage,
      FirstSearchResult,
      LastSearchResult
     }
