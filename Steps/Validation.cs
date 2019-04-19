@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using RestaurantSearch.UITests.Helpers;
@@ -13,31 +12,11 @@ namespace RestaurantSearch.UITests.Steps
     public class Valdiation
     {
         private readonly SearchResultPage _searchResultPage;
-        private readonly SharedActions _sharedActions;
 
-        public Valdiation(SearchResultPage searchResultPage, SharedActions sharedActions)
+        public Valdiation(SearchResultPage searchResultPage)
         {
             _searchResultPage = searchResultPage;
-            _sharedActions = sharedActions;
         }
-        //[Given(@"I should see the restaurant name contained in the subheaderdfddf")]
-        //public void ThenIShouldSeeSomeRestaurantsIn(string expectedPostcode)
-        //{
-        //    //Assertion on positive results
-        //    var actualSubheaderforRestaurant = StateManager.Get<string>(SearchValues.Postcode.ToString());
-
-        //    Assert.That(actualSubheaderforRestaurant.Contains(expectedPostcode));
-        //}
-
-        //[Then(@"I should see the restaurant name contained in the subheader")]
-        //public void ThenIShouldSeeTheRestaurantNameInTheSubheader()
-        //{
-        //    var actualSubheaderforRestaurant = StateManager.Get<string>(SearchValues.RestaurantSubHeader.ToString());
-
-        //    var expectedRestaurantName = StateManager.Get<string>(SearchValues.Restaurant.ToString());
-
-        //    Assert.That(actualSubheaderforRestaurant.Contains(expectedRestaurantName));
-        //}
 
         [Then(@"I should see the correct details in the subheader")]
         public void ThenIShouldSeeThePostcodeInTheSubheader()
@@ -75,11 +54,15 @@ namespace RestaurantSearch.UITests.Steps
         {
             var searchResultValidations = table.CreateSet<SearchResultValidations>();
 
-            //foreach (var validation in searchResultValidations)
-            //{
-            //    var hasValidation = await ValidationHelper.ValidateAsync(_searchResultPage.EmptySearchResultMessage,
-            //        () => validation.EmptySearchResultMessage, TimeSpan.FromSeconds(2));
-            //}
+            foreach (var validation in searchResultValidations)
+            {
+                var hasValidation = await ValidationHelper.ValidateAsync(_searchResultPage.GetErrorMessagesFromSearchResultPage,
+                    ValidateErrorMessagesFromResultPage(validation), TimeSpan.FromSeconds(2));
+            }
+
+            var something = "f";
         }
+
+        private static Func<string, bool> ValidateErrorMessagesFromResultPage(SearchResultValidations validation) => validation.EmptySearchResultMessage.);
     }
 }
