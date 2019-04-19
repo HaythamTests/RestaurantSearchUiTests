@@ -12,11 +12,11 @@
 // To overcome the version conflict between NUnit's version this internal classes have been introduced
 namespace NUnit.Framework
 {
-    public class TestFixtureSetUpAttribute : SetUpAttribute
-    {
-    }
+  public class TestFixtureSetUpAttribute : SetUpAttribute
+  {
+  }
 
-    public class TestFixtureTearDownAttribute : TearDownAttribute
-    {
-    }
+  public class TestFixtureTearDownAttribute : TearDownAttribute
+  {
+  }
 }

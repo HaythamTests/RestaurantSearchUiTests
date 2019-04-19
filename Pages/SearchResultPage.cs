@@ -35,11 +35,20 @@ namespace RestaurantSearch.UITests.Pages
 
         public Task<List<IWebElement>> SearchResults() => Task.FromResult(RestaurantSearchResults.ToList());
 
-        public string TotalRestaurantsForGivenPostcode() => StateManager.Get<string>(SearchValues.DefaultSubheaderForGivenPostcode.ToString()).Split(new char[] { ' ' })[0];
+        private static string TotalNumberOfRestaurantsForPostcode() => StateManager
+            .Get<string>(SearchValues.DefaultSubheaderForGivenPostcode.ToString()).Split(new char[] { ' ' })[0];
 
-        public async Task<string> GetRestaurantHeaderAsync() => await ValidationHelper.ValidateAsync(DefaultHeaderForGivenPostcode, TotalRestaurantsForGivenPostcode,
+        private static readonly Func<string, bool> ValidateAgainstTotalRestaurantsForGivenPostcode = validation 
+            => !validation.ContainsString(TotalNumberOfRestaurantsForPostcode(), StringComparison.CurrentCulture);
+
+        public async Task<string> GetRestaurantHeaderAsync()
+        {
+            await ValidationHelper.ValidateAsync(DefaultHeaderForGivenPostcode,
+                ValidateAgainstTotalRestaurantsForGivenPostcode,
                 TimeSpan.FromSeconds(2));
+            return await DefaultHeaderForGivenPostcode();
+        }
 
-        public Task<IWebElement> EmptySearchResultMessage() => Task.FromResult(EmptySearchMessage);
+        public Task<string> EmptySearchResultMessage() => Task.FromResult(EmptySearchMessage.Text);
     }
 }

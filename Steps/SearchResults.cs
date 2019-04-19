@@ -8,12 +8,12 @@ using TechTalk.SpecFlow;
 namespace RestaurantSearch.UITests.Steps
 {
     [Binding]
-    public class SearchResultPages
+    public class SearchResults
     {
         private readonly SearchResultPage _searchResultPage;
         private readonly SharedActions _sharedActions;
 
-        public SearchResultPages(SearchResultPage searchResultPage, SharedActions sharedActions)
+        public SearchResults(SearchResultPage searchResultPage, SharedActions sharedActions)
         {
             _searchResultPage = searchResultPage;
             _sharedActions = sharedActions;
@@ -45,7 +45,7 @@ namespace RestaurantSearch.UITests.Steps
             else
             {
                 var emptySearchResultMessage = await _searchResultPage.EmptySearchResultMessage();
-                StateManager.Set(SearchValues.EmptySearchResultMessage.ToString(), emptySearchResultMessage.Text);
+                StateManager.Set(SearchValues.EmptySearchResultMessage.ToString(), emptySearchResultMessage);
             }
         }
     }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using RestaurantSearch.UITests.Helpers;
+using RestaurantSearch.UITests.Pages;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -10,6 +12,14 @@ namespace RestaurantSearch.UITests.Steps
     [Binding]
     public class Valdiation
     {
+        private readonly SearchResultPage _searchResultPage;
+        private readonly SharedActions _sharedActions;
+
+        public Valdiation(SearchResultPage searchResultPage, SharedActions sharedActions)
+        {
+            _searchResultPage = searchResultPage;
+            _sharedActions = sharedActions;
+        }
         //[Given(@"I should see the restaurant name contained in the subheaderdfddf")]
         //public void ThenIShouldSeeSomeRestaurantsIn(string expectedPostcode)
         //{
@@ -52,7 +62,6 @@ namespace RestaurantSearch.UITests.Steps
             Assert.That(lastSearchResult.ContainsString(restaurant, StringComparison.OrdinalIgnoreCase));
         }
 
-
         [Then(@"I should see the message (.*)")]
         public void ThenIShouldSeeErrorMessage(string errorMessage)
         {
@@ -62,15 +71,15 @@ namespace RestaurantSearch.UITests.Steps
         }
 
         [Then(@"I should see the following messages on the page")]
-        public void ThenIShouldSeeErrorMessage(Table table)
+        public async Task ThenIShouldSeeErrorMessageAsync(Table table)
         {
             var searchResultValidations = table.CreateSet<SearchResultValidations>();
 
-            //var f = errorMessages.GetEnumerator<"">()
-
-            var actualErrorMessage = StateManager.Get<string>(SearchValues.ErrorMessageOnSearchPage.ToString());
-
-            //Assert.AreEqual(errorMessage, actualErrorMessage);
+            //foreach (var validation in searchResultValidations)
+            //{
+            //    var hasValidation = await ValidationHelper.ValidateAsync(_searchResultPage.EmptySearchResultMessage,
+            //        () => validation.EmptySearchResultMessage, TimeSpan.FromSeconds(2));
+            //}
         }
     }
 }
