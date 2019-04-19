@@ -2,7 +2,7 @@
 
 namespace RestaurantSearch.UITests.Pages
 {
-    public class SharedActions
+    public class SharedAction
     {
         //Useful journey functions
         public void Search(IWebElement searchType, string input)
@@ -11,7 +11,6 @@ namespace RestaurantSearch.UITests.Pages
             searchType.SendKeys(input);
         }
 
-        //Including IWebElement parameter to Click in other areas in the test journey
         public void Click(IWebElement searchOn)
         {
             searchOn.Click();

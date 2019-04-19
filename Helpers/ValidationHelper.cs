@@ -15,7 +15,6 @@ namespace RestaurantSearch.UITests.Helpers
                 Thread.Sleep(interval);
 
                 var data = await dataDelegate();
-
                 if (validationDelegate(data))
                     return true;
                 else

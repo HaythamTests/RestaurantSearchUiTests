@@ -80,9 +80,9 @@ this.ScenarioSetup(scenarioInfo);
 #line 8
    testRunner.When(string.Format("I search for restaurant {0}", restaurant), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
-  testRunner.Then("I should see the correct details in the subheader", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.Then("I should see the correct subheader details in the Search Results page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 10
-  testRunner.And("the restaurant name is included in the first and last search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And("the restaurant name is included in the first and last search result titles", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -95,9 +95,14 @@ this.ScenarioSetup(scenarioInfo);
 #line 17
 this.ScenarioSetup(scenarioInfo);
 #line 18
-   testRunner.Given("I want food in area invalid", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+   testRunner.Given("I want food in area invalidSearchValue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "PostCodeErrorMessage"});
+            table1.AddRow(new string[] {
+                        "Please enter a full, valid postcode"});
 #line 19
-  testRunner.Then("I should see the message Please enter a full, valid postcode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.Then("I should see the error message", ((string)(null)), table1, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -107,23 +112,31 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void NegativeScenarioInvalidRestaurantSearchInAnArea()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("(Negative Scenario) Invalid restaurant search in an area", ((string[])(null)));
-#line 21
-this.ScenarioSetup(scenarioInfo);
-#line 22
-   testRunner.Given("I want food in area AR51 1AA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 23
-   testRunner.When("I search for restaurant invalid", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+this.ScenarioSetup(scenarioInfo);
 #line 24
-  testRunner.Then("I should see the correct details in the subheader", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Subheader",
-                        "EmptySearchResultMessage"});
-            table1.AddRow(new string[] {
-                        "\"No open restaurants\"",
-                        "\"We\'re coming up empty. Try casting your net a little wider.\""});
+   testRunner.Given("I want food in area AR51 1AA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 25
-  testRunner.And("I should see the following messages on the page", ((string)(null)), table1, "And ");
+   testRunner.When("I search for restaurant invalidSearchValue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 26
+  testRunner.Then("I should see the correct subheader details in the Search Results page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Subheader",
+                        "EmptySearchResultMessage",
+                        "SearchButtonText",
+                        "SearchButtonLink",
+                        "TipUsOffText",
+                        "TipUsOffLink"});
+            table2.AddRow(new string[] {
+                        "No open restaurants",
+                        "We\'re coming up empty. Try casting your net a little wider.",
+                        "Show All Restaurants",
+                        "https://www.just-eat.co.uk/area/",
+                        "Tip us off",
+                        "https://www.just-eat.co.uk/suggest-a-restaurant"});
+#line 27
+  testRunner.And("I should see the following texts and links on the page", ((string)(null)), table2, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using RestaurantSearch.UITests.Helpers;
+using RestaurantSearch.UITests.Models;
 using RestaurantSearch.UITests.Pages;
 using SeleniumExtras.PageObjects;
 using TechTalk.SpecFlow;
@@ -8,22 +8,22 @@ using TechTalk.SpecFlow;
 namespace RestaurantSearch.UITests.Steps
 {
     [Binding]
-    public class SearchPage
+    public class Search
     {
         private readonly IWebDriver _driver;
-        private Pages.SearchPage _searchPage;
-        private readonly SharedActions _sharedActions;
+        private SearchPage _searchPage;
+        private readonly SharedAction _sharedAction;
 
-        public SearchPage(IWebDriver driver, SharedActions sharedActions)
+        public Search(IWebDriver driver, SharedAction sharedAction)
         {
             _driver = driver;
-            _sharedActions = sharedActions;
+            _sharedAction = sharedAction;
         }
         //Before Scenario: start up
         [BeforeScenario]
         public void BeforeScenario()
         {
-            _searchPage = PageFactory.InitElements<Pages.SearchPage>(_driver);
+            _searchPage = PageFactory.InitElements<SearchPage>(_driver);
         }
         //After Scenario: clean up
         [AfterScenario]
@@ -33,20 +33,16 @@ namespace RestaurantSearch.UITests.Steps
         }
         //Search for postcode
         [Given(@"I want food in area (.*)")]
-        public async Task GivenIWantFoodIn(string postcode)
+        public void GivenIWantFoodIn(string postcode)
         {
-            StateManager.Set(SearchValues.Postcode.ToString(), postcode);
+            StateManager.Set(Input.Postcode.ToString(), postcode);
 
             //Navigation to the page
             _searchPage.Navigate();
 
             //Search by Postcode and submit
-            _sharedActions.Search(_searchPage.PostcodeSearchInput, postcode);
-            _searchPage.SearchButton.Click();
-
-            //Set error message
-            var errorMessage = await _searchPage.GetErrorMessage();
-            StateManager.Set(SearchValues.ErrorMessageOnSearchPage.ToString(), errorMessage.Text);
+            _sharedAction.Search(_searchPage.PostcodeSearchInput, postcode);
+            _searchPage.SearchButton.Click();         
         }
     }
 }

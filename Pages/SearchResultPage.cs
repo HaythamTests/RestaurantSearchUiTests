@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using RestaurantSearch.UITests.Helpers;
+using RestaurantSearch.UITests.Models;
 using SeleniumExtras.PageObjects;
 
 namespace RestaurantSearch.UITests.Pages
 {
     public class SearchResultPage
     {
+        //Identified page elements
         [FindsBy(How = How.CssSelector, Using = "[data-test-id='searchInput']")]
         public IWebElement RestaurantSearchInput { get; set; }
 
@@ -24,19 +25,26 @@ namespace RestaurantSearch.UITests.Pages
         [FindsBy(How = How.CssSelector, Using = "[class='alpha']")]
         public IWebElement EmptySearchMessage { get; set; }
 
+        [FindsBy(How = How.CssSelector, Using = "[data-test-id='show_all_restaurants']")]
+        public IWebElement SearchButtonInvalidSearch { get; set; }
+
+        [FindsBy(How = How.CssSelector, Using = "[data-test-id='tip_us_off']")]
+        public IWebElement TipUsOff { get; set; }
+
         //Initializing the registered driver to the page elements using PageFactory
         public SearchResultPage(IWebDriver driver)
         {
             PageFactory.InitElements(driver, this);
         }
 
+        //Page methods
         private Task<string> DefaultHeaderForGivenPostcode() => Task.FromResult(RestaurantHeader.Text);
 
-        public void StoreDefaultHeaderForGivenPostcode() => StateManager.Set(SearchValues.DefaultSubheaderForGivenPostcode.ToString(), DefaultHeaderForGivenPostcode().Result);
+        public void StoreDefaultHeaderForGivenPostcode() => StateManager.Set(Result.DefaultSubheaderForGivenPostcode.ToString(), DefaultHeaderForGivenPostcode().Result);
 
         public Task<List<IWebElement>> SearchResults() => Task.FromResult(RestaurantSearchResults.ToList());
 
-        private static string TotalNumberOfRestaurantsForPostcode() => StateManager.Get<string>(SearchValues.DefaultSubheaderForGivenPostcode.ToString()).Split(new char[] {' '})[0];
+        private static string TotalNumberOfRestaurantsForPostcode() => StateManager.Get<string>(Result.DefaultSubheaderForGivenPostcode.ToString()).Split(new char[] {' '})[0];
 
         private static readonly Func<string, bool> ValidateAgainstTotalRestaurantsForGivenPostcode = validation => !validation.ContainsString(TotalNumberOfRestaurantsForPostcode(), StringComparison.CurrentCulture);
 
@@ -48,12 +56,35 @@ namespace RestaurantSearch.UITests.Pages
 
         public Task<string> EmptySearchResultMessage() => Task.FromResult(EmptySearchMessage.Text);
 
-        public async Task<IEnumerable<string>> GetErrorMessagesFromSearchResultPage()
+        public Task<string> SearchButtonInvalidSearchText() => Task.FromResult(SearchButtonInvalidSearch.Text);
+
+        public Task<string> SearchButtonInvalidSearchLink() => Task.FromResult(SearchButtonInvalidSearch.GetAttribute("href"));
+
+        public Task<string> TipUsOffText() => Task.FromResult(TipUsOff.Text);
+
+        public Task<string> TipUsOffLink() => Task.FromResult(TipUsOff.GetAttribute("href"));
+
+        public async Task GetSubheaderAsync()
         {
-            var errorMessages = new List<string>();
-            errorMessages.Add(await EmptySearchResultMessage());
-            errorMessages.Add(await GetRestaurantHeaderAsync());
-            return errorMessages;
+            var subHeaderText = await GetRestaurantHeaderAsync();
+            StateManager.Set(Result.RestaurantSubHeader.ToString(), subHeaderText);
+        }
+
+        public async Task GetFirstAndLastSearchResultsFromSearchResultPageAsync()
+        {
+            var getSearchResults = await SearchResults();
+            StateManager.Set(Result.FirstSearchResult.ToString(), getSearchResults.First().Text);
+            StateManager.Set(Result.LastSearchResult.ToString(), getSearchResults.Last().Text);
+        }
+
+        public async Task GetErrorInformationFromSearchResultPageAsync()
+        {
+            StateManager.Set(Result.EmptySearchResultMessage.ToString(), await EmptySearchResultMessage());
+            StateManager.Set(Result.SearchButtonInvalidSearchText.ToString(), await SearchButtonInvalidSearchText());
+            StateManager.Set(Result.SearchButtonInvalidSearchLink.ToString(),
+                await SearchButtonInvalidSearchLink());
+            StateManager.Set(Result.TipUsOffText.ToString(), await TipUsOffText());
+            StateManager.Set(Result.TipUsOffLink.ToString(), await TipUsOffLink());
         }
     }
 }

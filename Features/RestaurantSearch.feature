@@ -6,8 +6,8 @@
 Scenario Outline: (Positive Scenario) Search for restaurant(s) in an area
  		Given I want food in area AR51 1AA
  		When I search for restaurant <restaurant>
-		Then I should see the correct details in the subheader
-		And the restaurant name is included in the first and last search results
+		Then I should see the correct subheader details in the Search Results page
+		And the restaurant name is included in the first and last search result titles
 Examples:
 | restaurant |
 | Domino's   |
@@ -15,13 +15,15 @@ Examples:
 | Kfc        |
 
 Scenario: (Negative Scenario) Invalid Postcode in Search page
- 		Given I want food in area invalid
-		Then I should see the message Please enter a full, valid postcode
+ 		Given I want food in area invalidSearchValue
+		Then I should see the error message
+| PostCodeErrorMessage                |
+| Please enter a full, valid postcode |
 
 Scenario: (Negative Scenario) Invalid restaurant search in an area
  		Given I want food in area AR51 1AA
- 		When I search for restaurant invalid
-		Then I should see the correct details in the subheader
-		And I should see the following messages on the page
-| Subheader             | EmptySearchResultMessage                                      |
-| "No open restaurants" | "We're coming up empty. Try casting your net a little wider." |
+ 		When I search for restaurant invalidSearchValue
+		Then I should see the correct subheader details in the Search Results page
+		And I should see the following texts and links on the page
+| Subheader           | EmptySearchResultMessage                                    | SearchButtonText     | SearchButtonLink                 | TipUsOffText | TipUsOffLink                                    |
+| No open restaurants | We're coming up empty. Try casting your net a little wider. | Show All Restaurants | https://www.just-eat.co.uk/area/ | Tip us off   | https://www.just-eat.co.uk/suggest-a-restaurant |

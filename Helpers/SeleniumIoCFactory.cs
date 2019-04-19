@@ -15,7 +15,7 @@ namespace RestaurantSearch.UITests.Helpers
         {
             _objectContainer = objectContainer;
         }
-        //Registering ChromeDriver to the IWebDriver
+        //Registering ChromeDriver
         [BeforeScenario(Order = 0)]
         public void InitializeWebDriver()
         {

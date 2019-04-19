@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using RestaurantSearch.UITests.Helpers;
+using RestaurantSearch.UITests.Models;
 using RestaurantSearch.UITests.Pages;
 using TechTalk.SpecFlow;
 
@@ -11,41 +11,38 @@ namespace RestaurantSearch.UITests.Steps
     public class SearchResults
     {
         private readonly SearchResultPage _searchResultPage;
-        private readonly SharedActions _sharedActions;
+        private readonly SharedAction _sharedAction;
 
-        public SearchResults(SearchResultPage searchResultPage, SharedActions sharedActions)
+        public SearchResults(SearchResultPage searchResultPage, SharedAction sharedActions)
         {
             _searchResultPage = searchResultPage;
-            _sharedActions = sharedActions;
+            _sharedAction = sharedActions;
         }
 
         [Given(@"I search for restaurant (.*)")]
         [When(@"I search for restaurant (.*)")]
         public async Task WhenISearchForRestaurants(string restaurant)
         {
-            StateManager.Set(SearchValues.Restaurant.ToString(), restaurant);
+            StateManager.Set(Input.Restaurant.ToString(), restaurant);
 
-            //Default Subheader for all restaurants
+            //Save default Subheader for all restaurants
             _searchResultPage.StoreDefaultHeaderForGivenPostcode();
 
             //Restaurant search
-            _sharedActions.Search(_searchResultPage.RestaurantSearchInput, restaurant);
+            _sharedAction.Search(_searchResultPage.RestaurantSearchInput, restaurant);
 
-            //Actual Subheader for the specified restaurant
-            var subHeaderText = await _searchResultPage.GetRestaurantHeaderAsync();
-            StateManager.Set(SearchValues.RestaurantSubHeader.ToString(), subHeaderText);
+            //Save actual Subheader for the specified restaurant
+            await _searchResultPage.GetSubheaderAsync();
 
-            if (!subHeaderText.ContainsString("No open restaurants", StringComparison.OrdinalIgnoreCase))
+            if (!StateManager.Get<string>(Result.RestaurantSubHeader.ToString()).ContainsString("No open restaurants", StringComparison.OrdinalIgnoreCase))
             {
-                //Return search results for the specified restaurant
-                var getSearchResults = await _searchResultPage.SearchResults();
-                StateManager.Set(SearchValues.FirstSearchResult.ToString(), getSearchResults.First().Text);
-                StateManager.Set(SearchValues.LastSearchResult.ToString(), getSearchResults.Last().Text);
+                //Save first and last search results for the specified restaurant
+                await _searchResultPage.GetFirstAndLastSearchResultsFromSearchResultPageAsync();
             }
             else
             {
-                var emptySearchResultMessage = await _searchResultPage.EmptySearchResultMessage();
-                StateManager.Set(SearchValues.EmptySearchResultMessage.ToString(), emptySearchResultMessage);
+                //Save error information for the invalid search
+                await _searchResultPage.GetErrorInformationFromSearchResultPageAsync();
             }
         }
     }

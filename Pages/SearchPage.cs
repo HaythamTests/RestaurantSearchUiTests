@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 using OpenQA.Selenium;
+using RestaurantSearch.UITests.Helpers;
+using RestaurantSearch.UITests.Models;
 using SeleniumExtras.PageObjects;
 
 namespace RestaurantSearch.UITests.Pages
@@ -9,7 +11,7 @@ namespace RestaurantSearch.UITests.Pages
         private const string SearchUrl = "https://www.just-eat.co.uk/";
         private readonly IWebDriver _driver;
 
-        //Identified objects from page elements
+        //Identified page elements
         [FindsBy(How = How.Name, Using = "postcode")]
         public IWebElement PostcodeSearchInput { get; set; }
 
@@ -31,6 +33,13 @@ namespace RestaurantSearch.UITests.Pages
             _driver.Navigate().GoToUrl(SearchUrl);
         }
 
-        public Task<IWebElement> GetErrorMessage() => Task.FromResult(ErrorMessage);
+        //Page method
+        public Task<string> PostCodeErrorMessage() => Task.FromResult(ErrorMessage.Text);
+
+        public async Task GetErrorInformationFromSearchPageAsync()
+        {
+            StateManager.Set(Result.PostCodeErrorMessage.ToString(), await PostCodeErrorMessage());
+
+        }
     }
 }
