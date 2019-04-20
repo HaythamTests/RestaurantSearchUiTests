@@ -24,7 +24,7 @@ namespace RestaurantSearch.UITests.Pages
         public IList<IWebElement> RestaurantSearchResults { get; set; }
 
         [FindsBy(How = How.CssSelector, Using = "[data-test-id='searchresults']")]
-        public IWebElement CheckRestaurantsAvailability { get; set; }
+        public IWebElement RestaurantsAvailability { get; set; }
 
         [FindsBy(How = How.CssSelector, Using = "div[class*='is-active'] h2[class='alpha']")]
         public IWebElement EmptySearchMessage { get; set; }
@@ -48,15 +48,15 @@ namespace RestaurantSearch.UITests.Pages
 
         public Task<List<IWebElement>> SearchResults() => Task.FromResult(RestaurantSearchResults.ToList());
 
-        public Task<bool> RestuarantsUnavailable() => Task.FromResult(CheckRestaurantsAvailability.GetAttribute("class").Equals("is-visuallyHidden"));
+        public Task<bool> RestuarantsUnavailable() => Task.FromResult(RestaurantsAvailability.GetAttribute("class").Equals("is-visuallyHidden"));
 
         private static string TotalNumberOfRestaurantsForPostcode() => StateManager.Get<string>(Result.DefaultSubheaderForGivenPostcode.ToString()).Split(new char[] {' '})[0];
 
-        private static readonly Func<string, bool> ValidateAgainstTotalRestaurantsForGivenPostcode = validation => !validation.ContainsString(TotalNumberOfRestaurantsForPostcode(), StringComparison.CurrentCulture);
+        private static readonly Func<string, bool> ValidateByTotalRestaurantsForGivenPostcode = validation => !validation.ContainsString(TotalNumberOfRestaurantsForPostcode(), StringComparison.CurrentCulture);
 
         public async Task<string> RestaurantHeaderAsync()
         {
-            await ValidationHelper.ValidateAsync(DefaultHeaderForGivenPostcode, ValidateAgainstTotalRestaurantsForGivenPostcode, TimeSpan.FromSeconds(2));
+            await ValidationHelper.ValidateAsync(DefaultHeaderForGivenPostcode, ValidateByTotalRestaurantsForGivenPostcode, TimeSpan.FromSeconds(2));
             return await DefaultHeaderForGivenPostcode();
         }
 
