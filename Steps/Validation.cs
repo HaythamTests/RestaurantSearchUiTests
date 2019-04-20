@@ -60,28 +60,26 @@ namespace RestaurantSearch.UITests.Steps
         [Then(@"I should see the following texts and links on the page")]
         public void ThenIShouldSeeErrorMessage(Table table)
         {
-            var searchResultValidations = table.CreateSet<SearchResultValidations>().Select(x => x);
+            var searchResultValidations = table.CreateSet<SearchResultValidations>();
 
+            var searchResultValidationsd = table.CreateSet<SearchResultValidations>().Select(x=>x);
 
-            //var f = StateManager.Get<string>(Result.RestaurantSubHeader.ToString())
-            //    .Any(searchResultValidations.Select(x => x));
+            foreach (var validation in searchResultValidations)
+            {
+                var actualSubheaderforRestaurant = StateManager.Get<string>(Result.RestaurantSubHeader.ToString());
+                var emptySearchResultMessage = StateManager.Get<string>(Result.EmptySearchResultMessage.ToString());
+                var searchButtonInvalidSearchText = StateManager.Get<string>(Result.SearchButtonInvalidSearchText.ToString());
+                var searchButtonInvalidSearchLink = StateManager.Get<string>(Result.SearchButtonInvalidSearchLink.ToString());
+                var tipUsOffText = StateManager.Get<string>(Result.TipUsOffText.ToString());
+                var tipUsOffLink = StateManager.Get<string>(Result.TipUsOffLink.ToString());
 
-            //foreach (var validation in searchResultValidations)
-            //{ 
-            //    var actualSubheaderforRestaurant = StateManager.Get<string>(Result.RestaurantSubHeader.ToString());
-            //    var emptySearchResultMessage = StateManager.Get<string>(Result.EmptySearchResultMessage.ToString());
-            //    var searchButtonInvalidSearchText = StateManager.Get<string>(Result.SearchButtonInvalidSearchText.ToString());
-            //    var searchButtonInvalidSearchLink = StateManager.Get<string>(Result.SearchButtonInvalidSearchLink.ToString());
-            //    var tipUsOffText = StateManager.Get<string>(Result.TipUsOffText.ToString());
-            //    var tipUsOffLink = StateManager.Get<string>(Result.TipUsOffLink.ToString());
-
-            //    Assert.That(emptySearchResultMessage.ContainsString(searchResultValidations., StringComparison.OrdinalIgnoreCase));
-            //    Assert.That(actualSubheaderforRestaurant.ContainsString(validation.Subheader, StringComparison.OrdinalIgnoreCase));
-            //    Assert.That(searchButtonInvalidSearchText.ContainsString(validation.SearchButtonInvalidSearchText, StringComparison.OrdinalIgnoreCase));
-            //    Assert.That(searchButtonInvalidSearchLink.ContainsString(validation.SearchButtonInvalidSearchLink, StringComparison.OrdinalIgnoreCase));
-            //    Assert.That(tipUsOffText.ContainsString(validation.TipUsOffText, StringComparison.OrdinalIgnoreCase));
-            //    Assert.That(tipUsOffLink.ContainsString(validation.TipUsOffLink, StringComparison.OrdinalIgnoreCase));
-            //}
+                Assert.That(actualSubheaderforRestaurant.ContainsString(validation.Subheader, StringComparison.OrdinalIgnoreCase));
+                Assert.That(emptySearchResultMessage.ContainsString(validation.EmptySearchResultMessage, StringComparison.OrdinalIgnoreCase));
+                Assert.That(searchButtonInvalidSearchText.ContainsString(validation.SearchButtonText, StringComparison.OrdinalIgnoreCase));
+                Assert.That(searchButtonInvalidSearchLink.ContainsString(validation.SearchButtonLink, StringComparison.OrdinalIgnoreCase));
+                Assert.That(tipUsOffText.ContainsString(validation.TipUsOffText, StringComparison.OrdinalIgnoreCase));
+                Assert.That(tipUsOffLink.ContainsString(validation.TipUsOffLink, StringComparison.OrdinalIgnoreCase));
+            }
         }
     }
 }
