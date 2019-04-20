@@ -4,15 +4,15 @@
  		I want to be able to find restaurants in my area
 
 Scenario Outline: (Positive Scenario) Search for restaurant(s) in an area
- 		Given I want food in area AR51 1AA
+ 		Given I want food in area <postcode>
  		When I search for restaurant <restaurant>
 		Then I should see the correct subheader details in the Search Results page
 		And the restaurant name is included in the first and last search result titles
 Examples:
-| restaurant |
-| Domino's   |
-| Papa Johns |
-| Kfc        |
+| postcode | restaurant                       |
+| AR51 1AA | Domino's                         |
+| EC2Y 8BN | Papa John                        |
+| WC2H 7LE | tinseltown great portland Street |
 
 Scenario: (Negative Scenario) Invalid Postcode in Search page
  		Given I want food in area invalidSearchValue

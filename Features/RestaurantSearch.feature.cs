@@ -67,16 +67,16 @@ namespace RestaurantSearch.UITests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("(Positive Scenario) Search for restaurant(s) in an area")]
-        [NUnit.Framework.TestCaseAttribute("Domino\'s", null)]
-        [NUnit.Framework.TestCaseAttribute("Papa Johns", null)]
-        [NUnit.Framework.TestCaseAttribute("Kfc", null)]
-        public virtual void PositiveScenarioSearchForRestaurantSInAnArea(string restaurant, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("AR51 1AA", "Domino\'s", null)]
+        [NUnit.Framework.TestCaseAttribute("EC2Y 8BN", "Papa John", null)]
+        [NUnit.Framework.TestCaseAttribute("WC2H 7LE", "tinseltown great portland Street", null)]
+        public virtual void PositiveScenarioSearchForRestaurantSInAnArea(string postcode, string restaurant, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("(Positive Scenario) Search for restaurant(s) in an area", exampleTags);
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
-   testRunner.Given("I want food in area AR51 1AA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+   testRunner.Given(string.Format("I want food in area {0}", postcode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
    testRunner.When(string.Format("I search for restaurant {0}", restaurant), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9

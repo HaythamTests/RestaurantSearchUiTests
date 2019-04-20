@@ -22,6 +22,14 @@ namespace RestaurantSearch.UITests.Pages
             Using = "section[class*='is-active'] a [data-test-id='restaurant_info'] [data-test-id='restaurant_name']")]
         public IList<IWebElement> RestaurantSearchResults { get; set; }
 
+        [FindsBy(How = How.CssSelector,
+            Using = "[data-test-id='searchresults'] [class='c-listing']")]
+        public IWebElement OpenRestaurantsList { get; set; }
+
+        [FindsBy(How = How.CssSelector,
+            Using = "[data-test-id='searchresults'] [class='c-listing c-listing--subsequent']")]
+        public IWebElement ClosedRestaurantsList { get; set; }
+
         [FindsBy(How = How.CssSelector, Using = "[class='alpha']")]
         public IWebElement EmptySearchMessage { get; set; }
 
@@ -43,6 +51,10 @@ namespace RestaurantSearch.UITests.Pages
         public void StoreDefaultHeaderForGivenPostcode() => StateManager.Set(Result.DefaultSubheaderForGivenPostcode.ToString(), DefaultHeaderForGivenPostcode().Result);
 
         public Task<List<IWebElement>> SearchResults() => Task.FromResult(RestaurantSearchResults.ToList());
+
+        public Task<bool> OpenRestuarantsAvailability() => Task.FromResult(OpenRestaurantsList.Displayed);
+
+        public Task<bool> ClosedRestuarantsAvailability() => Task.FromResult(ClosedRestaurantsList.Displayed);
 
         private static string TotalNumberOfRestaurantsForPostcode() => StateManager.Get<string>(Result.DefaultSubheaderForGivenPostcode.ToString()).Split(new char[] {' '})[0];
 
