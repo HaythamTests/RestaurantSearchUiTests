@@ -48,7 +48,7 @@ namespace RestaurantSearch.UITests.Pages
 
         public Task<List<IWebElement>> SearchResults() => Task.FromResult(RestaurantSearchResults.ToList());
 
-        public Task<bool> RestuarantsAvailability() => Task.FromResult(CheckRestaurantsAvailability.GetAttribute("class").Contains("['is-visuallyHidden']"));
+        public Task<bool> RestuarantsUnavailable() => Task.FromResult(CheckRestaurantsAvailability.GetAttribute("class").Equals("is-visuallyHidden"));
 
         private static string TotalNumberOfRestaurantsForPostcode() => StateManager.Get<string>(Result.DefaultSubheaderForGivenPostcode.ToString()).Split(new char[] {' '})[0];
 

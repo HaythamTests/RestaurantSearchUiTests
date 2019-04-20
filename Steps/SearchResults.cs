@@ -34,16 +34,15 @@ namespace RestaurantSearch.UITests.Steps
             //Save actual Subheader for the specified restaurant
             await _searchResultPage.GetSubheaderAsync();
 
-            if (!StateManager.Get<string>(Result.RestaurantSubHeader.ToString()).ContainsString("No open restaurants", StringComparison.OrdinalIgnoreCase) 
-                && !await _searchResultPage.RestuarantsAvailability())
-            {
-                //Save first and last search results for the specified restaurant
-                await _searchResultPage.GetFirstAndLastSearchResultsFromSearchResultPageAsync();
-            }
-            else
+            if (await _searchResultPage.RestuarantsUnavailable())
             {
                 //Save on-screen validations for the invalid search
                 await _searchResultPage.GetOnscreenValidationsFromSearchResultPageAsync();
+            }
+            else
+            {
+                //Save first and last search results for the specified restaurant
+                await _searchResultPage.GetFirstAndLastSearchResultsFromSearchResultPageAsync();
             }
         }
     }

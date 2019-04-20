@@ -70,6 +70,7 @@ namespace RestaurantSearch.UITests.Features
         [NUnit.Framework.TestCaseAttribute("AR51 1AA", "Domino\'s", null)]
         [NUnit.Framework.TestCaseAttribute("EC2Y 8BN", "Papa John", null)]
         [NUnit.Framework.TestCaseAttribute("WC2H 7LE", "tinseltown great portland Street", null)]
+        [NUnit.Framework.TestCaseAttribute("WC2H 7LE", "subway goodge", null)]
         public virtual void PositiveScenarioSearchForRestaurantSInAnArea(string postcode, string restaurant, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("(Positive Scenario) Search for restaurant(s) in an area", exampleTags);
@@ -92,16 +93,16 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void NegativeScenarioInvalidPostcodeInSearchPage()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("(Negative Scenario) Invalid Postcode in Search page", ((string[])(null)));
-#line 17
-this.ScenarioSetup(scenarioInfo);
 #line 18
+this.ScenarioSetup(scenarioInfo);
+#line 19
    testRunner.Given("I want food in area invalidSearchValue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "PostCodeErrorMessage"});
             table1.AddRow(new string[] {
                         "Please enter a full, valid postcode"});
-#line 19
+#line 20
   testRunner.Then("I should see the error message", ((string)(null)), table1, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -112,13 +113,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void NegativeScenarioInvalidRestaurantSearchInAnArea()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("(Negative Scenario) Invalid restaurant search in an area", ((string[])(null)));
-#line 23
-this.ScenarioSetup(scenarioInfo);
 #line 24
-   testRunner.Given("I want food in area AR51 1AA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 25
-   testRunner.When("I search for restaurant invalidSearchValue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+   testRunner.Given("I want food in area AR51 1AA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 26
+   testRunner.When("I search for restaurant invalidSearchValue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
   testRunner.Then("I should see the correct subheader details in the Search Results page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -135,7 +136,7 @@ this.ScenarioSetup(scenarioInfo);
                         "https://www.just-eat.co.uk/area/",
                         "Tip us off",
                         "https://www.just-eat.co.uk/suggest-a-restaurant"});
-#line 27
+#line 28
   testRunner.And("I should see the following texts and links on the page", ((string)(null)), table2, "And ");
 #line hidden
             this.ScenarioCleanup();

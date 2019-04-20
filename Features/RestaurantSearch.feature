@@ -13,6 +13,7 @@ Examples:
 | AR51 1AA | Domino's                         |
 | EC2Y 8BN | Papa John                        |
 | WC2H 7LE | tinseltown great portland Street |
+| WC2H 7LE | subway goodge                    |
 
 Scenario: (Negative Scenario) Invalid Postcode in Search page
  		Given I want food in area invalidSearchValue
