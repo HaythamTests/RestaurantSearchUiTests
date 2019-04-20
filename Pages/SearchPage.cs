@@ -18,7 +18,7 @@ namespace RestaurantSearch.UITests.Pages
         [FindsBy(How = How.CssSelector, Using = "button[type='submit']")]
         public IWebElement SearchButton { get; set; }
 
-        [FindsBy(How = How.CssSelector, Using = "[id='errorMessage']")]
+        [FindsBy(How = How.Id, Using = "errorMessage")]
         public IWebElement ErrorMessage { get; set; }
 
         //Initializing the registered driver to the page elements using PageFactory

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using RestaurantSearch.UITests.Helpers;
@@ -61,8 +60,6 @@ namespace RestaurantSearch.UITests.Steps
         public void ThenIShouldSeeErrorMessage(Table table)
         {
             var searchResultValidations = table.CreateSet<SearchResultValidations>();
-
-            var searchResultValidationsd = table.CreateSet<SearchResultValidations>().Select(x=>x);
 
             foreach (var validation in searchResultValidations)
             {
