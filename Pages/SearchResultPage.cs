@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using RestaurantSearch.UITests.Helpers;
 using RestaurantSearch.UITests.Models;
@@ -75,6 +76,17 @@ namespace RestaurantSearch.UITests.Pages
         public Task<string> TipUsOffText() => Task.FromResult(TipUsOff.Text);
 
         public Task<string> TipUsOffLink() => Task.FromResult(TipUsOff.GetAttribute("href"));
+
+        public async Task<bool> RestaurantsAvailability()
+        {
+            if (await OpenRestuarantsAvailability() ||
+                 await ClosedRestuarantsAvailability())
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         public async Task GetSubheaderAsync()
         {
