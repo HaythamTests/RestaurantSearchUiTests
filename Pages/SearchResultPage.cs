@@ -23,15 +23,10 @@ namespace RestaurantSearch.UITests.Pages
             Using = "section[class*='is-active'] a [data-test-id='restaurant_info'] [data-test-id='restaurant_name']")]
         public IList<IWebElement> RestaurantSearchResults { get; set; }
 
-        [FindsBy(How = How.CssSelector,
-            Using = "[data-test-id='searchresults'] [class='c-listing']")]
-        public IWebElement OpenRestaurantsList { get; set; }
+        [FindsBy(How = How.CssSelector, Using = "[data-test-id='searchresults']")]
+        public IWebElement CheckRestaurantsAvailability { get; set; }
 
-        [FindsBy(How = How.CssSelector,
-            Using = "[data-test-id='searchresults'] [class='c-listing c-listing--subsequent']")]
-        public IWebElement ClosedRestaurantsList { get; set; }
-
-        [FindsBy(How = How.CssSelector, Using = "[class='alpha']")]
+        [FindsBy(How = How.CssSelector, Using = "div[class*='is-active'] h2[class='alpha']")]
         public IWebElement EmptySearchMessage { get; set; }
 
         [FindsBy(How = How.CssSelector, Using = "[data-test-id='show_all_restaurants']")]
@@ -53,9 +48,7 @@ namespace RestaurantSearch.UITests.Pages
 
         public Task<List<IWebElement>> SearchResults() => Task.FromResult(RestaurantSearchResults.ToList());
 
-        public Task<bool> OpenRestuarantsAvailability() => Task.FromResult(OpenRestaurantsList.Displayed);
-
-        public Task<bool> ClosedRestuarantsAvailability() => Task.FromResult(ClosedRestaurantsList.Displayed);
+        public Task<bool> RestuarantsAvailability() => Task.FromResult(CheckRestaurantsAvailability.GetAttribute("class").Contains("['is-visuallyHidden']"));
 
         private static string TotalNumberOfRestaurantsForPostcode() => StateManager.Get<string>(Result.DefaultSubheaderForGivenPostcode.ToString()).Split(new char[] {' '})[0];
 
@@ -76,17 +69,6 @@ namespace RestaurantSearch.UITests.Pages
         public Task<string> TipUsOffText() => Task.FromResult(TipUsOff.Text);
 
         public Task<string> TipUsOffLink() => Task.FromResult(TipUsOff.GetAttribute("href"));
-
-        public async Task<bool> RestaurantsAvailability()
-        {
-            if (await OpenRestuarantsAvailability() ||
-                 await ClosedRestuarantsAvailability())
-            {
-                return true;
-            }
-
-            return false;
-        }
 
         public async Task GetSubheaderAsync()
         {

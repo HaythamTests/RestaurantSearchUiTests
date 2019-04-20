@@ -35,7 +35,7 @@ namespace RestaurantSearch.UITests.Steps
             await _searchResultPage.GetSubheaderAsync();
 
             if (!StateManager.Get<string>(Result.RestaurantSubHeader.ToString()).ContainsString("No open restaurants", StringComparison.OrdinalIgnoreCase) 
-                && await _searchResultPage.RestaurantsAvailability())
+                && !await _searchResultPage.RestuarantsAvailability())
             {
                 //Save first and last search results for the specified restaurant
                 await _searchResultPage.GetFirstAndLastSearchResultsFromSearchResultPageAsync();
