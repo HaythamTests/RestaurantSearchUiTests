@@ -54,7 +54,7 @@ namespace RestaurantSearch.UITests.Pages
 
         private static readonly Func<string, bool> ValidateAgainstTotalRestaurantsForGivenPostcode = validation => !validation.ContainsString(TotalNumberOfRestaurantsForPostcode(), StringComparison.CurrentCulture);
 
-        public async Task<string> GetRestaurantHeaderAsync()
+        public async Task<string> RestaurantHeaderAsync()
         {
             await ValidationHelper.ValidateAsync(DefaultHeaderForGivenPostcode, ValidateAgainstTotalRestaurantsForGivenPostcode, TimeSpan.FromSeconds(2));
             return await DefaultHeaderForGivenPostcode();
@@ -70,9 +70,9 @@ namespace RestaurantSearch.UITests.Pages
 
         public Task<string> TipUsOffLink() => Task.FromResult(TipUsOff.GetAttribute("href"));
 
-        public async Task GetSubheaderAsync()
+        public async Task GetSubheaderForRestaurantAsync()
         {
-            var subHeaderText = await GetRestaurantHeaderAsync();
+            var subHeaderText = await RestaurantHeaderAsync();
             StateManager.Set(Result.RestaurantSubHeader.ToString(), subHeaderText);
         }
 

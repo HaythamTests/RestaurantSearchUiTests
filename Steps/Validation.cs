@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using RestaurantSearch.UITests.Helpers;
@@ -76,7 +77,15 @@ namespace RestaurantSearch.UITests.Steps
                 Assert.That(searchButtonInvalidSearchLink.ContainsString(validation.SearchButtonLink, StringComparison.OrdinalIgnoreCase));
                 Assert.That(tipUsOffText.ContainsString(validation.TipUsOffText, StringComparison.OrdinalIgnoreCase));
                 Assert.That(tipUsOffLink.ContainsString(validation.TipUsOffLink, StringComparison.OrdinalIgnoreCase));
+
+                var f = Enum.GetNames(typeof(Result)).Length;
+                var g = StateManager.Get<string>(Result.RestaurantSubHeader.ToString());
+                var fd = "sd";
             }
+
+            //Assert.Equals(searchResultValidations.Count(), StateManager.Get<string>());
         }
+
+        //private static readonly Func<string, bool> ValidateAgainstTotalRestaurantsForGivenPostcode = validation => !validation.ContainsString(TotalNumberOfRestaurantsForPostcode(), StringComparison.CurrentCulture);
     }
 }

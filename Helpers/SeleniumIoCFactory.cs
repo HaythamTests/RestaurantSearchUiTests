@@ -19,8 +19,7 @@ namespace RestaurantSearch.UITests.Helpers
         [BeforeScenario(Order = 0)]
         public void InitializeWebDriver()
         {
-            var webDriver = new ChromeDriver(Path.GetFullPath(@"Driver/"));
-            _objectContainer.RegisterInstanceAs<IWebDriver>(webDriver);
+            _objectContainer.RegisterInstanceAs<IWebDriver>(new ChromeDriver(Path.GetFullPath(@"Driver/")));
         }
     }
 }

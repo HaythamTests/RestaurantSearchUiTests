@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using RestaurantSearch.UITests.Helpers;
 using RestaurantSearch.UITests.Models;
 using RestaurantSearch.UITests.Pages;
@@ -32,7 +31,7 @@ namespace RestaurantSearch.UITests.Steps
             _sharedAction.Search(_searchResultPage.RestaurantSearchInput, restaurant);
 
             //Save actual Subheader for the specified restaurant
-            await _searchResultPage.GetSubheaderAsync();
+            await _searchResultPage.GetSubheaderForRestaurantAsync();
 
             if (await _searchResultPage.RestuarantsUnavailable())
             {
