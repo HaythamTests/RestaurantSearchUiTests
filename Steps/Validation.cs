@@ -28,8 +28,10 @@ namespace RestaurantSearch.UITests.Steps
             var expectedPostcode = StateManager.Get<string>(Input.Postcode.ToString());
             var defaultHeaderForTotalRestaurants = StateManager.Get<string>(Result.DefaultSubheaderForGivenPostcode.ToString());
 
-            Assert.That(subheaderAfterRestaurantSearch.Contains(expectedPostcode));
-            Assert.AreNotEqual(subheaderAfterRestaurantSearch, defaultHeaderForTotalRestaurants) ;
+            Assert.True(subheaderAfterRestaurantSearch.Contains(expectedPostcode), $"Subheader validation failed: " +
+                                                                                   $"{subheaderAfterRestaurantSearch} doesn't contain {expectedPostcode}.");
+            Assert.AreEqual(subheaderAfterRestaurantSearch, defaultHeaderForTotalRestaurants, $"Subheader validation failed: " +
+                                                                                              $"{subheaderAfterRestaurantSearch} doesn't equal {defaultHeaderForTotalRestaurants}.") ;
         }
 
         [Then(@"the restaurant name is included in the first and last search result titles")]
@@ -40,8 +42,10 @@ namespace RestaurantSearch.UITests.Steps
             var lastSearchResult = StateManager.Get<string>(Result.LastSearchResult.ToString());
 
        
-            Assert.That(firstSearchResult.ContainsString(searchedRestaurant, StringComparison.OrdinalIgnoreCase));
-            Assert.That(lastSearchResult.ContainsString(searchedRestaurant, StringComparison.OrdinalIgnoreCase));
+            Assert.True(firstSearchResult.ContainsString(searchedRestaurant, StringComparison.OrdinalIgnoreCase), $"Search validation failed: " +
+                                                                                                                  $"First restaurant search {firstSearchResult} doesn't contain {searchedRestaurant}.");
+            Assert.True(lastSearchResult.ContainsString(searchedRestaurant, StringComparison.OrdinalIgnoreCase), $"Search validation failed: " +
+                                                                                                                 $"Last restaurant search {lastSearchResult} doesn't contain {searchedRestaurant}.");
         }
 
         [Then(@"the search result count is reflected in the subheader")]
@@ -52,13 +56,15 @@ namespace RestaurantSearch.UITests.Steps
                 var openRestaurantsSubHeaderValue = StateManager.Get<int>(Result.OpenRestaurantsCountFromSubheader.ToString());
                 var openRestaurantsSearchResultCount = StateManager.Get<int>(Result.OpenRestaurantsFromSearchResult.ToString());
 
-                Assert.AreEqual(openRestaurantsSearchResultCount, openRestaurantsSubHeaderValue);
+                Assert.AreEqual(openRestaurantsSearchResultCount, openRestaurantsSubHeaderValue, $"Search result count validation failed: " +
+                                                                                                 $"Subheader {openRestaurantsSearchResultCount} doesn't equal {openRestaurantsSubHeaderValue}.");
             }
             else
             {
                 var subheaderAfterRestaurantSearch = StateManager.Get<string>(Result.RestaurantSubHeader.ToString());
 
-                Assert.That(subheaderAfterRestaurantSearch.ContainsString(_openRestaurantUnavailableSubheader, StringComparison.OrdinalIgnoreCase));
+                Assert.True(subheaderAfterRestaurantSearch.ContainsString(_openRestaurantUnavailableSubheader, StringComparison.OrdinalIgnoreCase), $"Search result count validation failed: " +
+                                                                                                                                                    $"Subheader {subheaderAfterRestaurantSearch} doesn't contain {_openRestaurantUnavailableSubheader}.");
             }
         }
 
@@ -72,7 +78,8 @@ namespace RestaurantSearch.UITests.Steps
             {
                 var actualPostcodeErrorMessage = StateManager.Get<string>(Result.PostCodeErrorMessage.ToString());
 
-                Assert.That(actualPostcodeErrorMessage.ContainsString(validation.PostCodeErrorMessage, StringComparison.OrdinalIgnoreCase));
+                Assert.True(actualPostcodeErrorMessage.ContainsString(validation.PostCodeErrorMessage, StringComparison.OrdinalIgnoreCase), $"Search error message validation failed: " +
+                                                                                                                                            $"Error message {actualPostcodeErrorMessage} doesn't contain {validation.PostCodeErrorMessage}.");
             }
         }
 
