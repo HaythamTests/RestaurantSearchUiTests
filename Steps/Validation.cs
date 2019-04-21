@@ -12,10 +12,12 @@ namespace RestaurantSearch.UITests.Steps
     public class Validation
     {
         private readonly SearchPage _searchPage;
+        private readonly SearchResults _searchResults;
 
-        public Validation(SearchPage searchPage)
+        public Validation(SearchPage searchPage, SearchResults searchResults)
         {
             _searchPage = searchPage;
+            _searchResults = searchResults;
         }    
         
         [Then(@"I should see the correct subheader details in the Search Results page")]
@@ -34,14 +36,21 @@ namespace RestaurantSearch.UITests.Steps
         public void ThenIShouldSeeTheRestaurantNameInTheSearhResult()
         {
             var searchedRestaurant = StateManager.Get<string>(Input.Restaurant.ToString());
-            var openRestaurantsSubHeaderValue = StateManager.Get<int>(Result.OpenRestaurantsCountFromSubheader.ToString());
-            var openRestaurantsSearchResultCount = StateManager.Get<int>(Result.OpenRestaurantsFromSearchResult.ToString());
+         
             var firstSearchResult = StateManager.Get<string>(Result.FirstSearchResult.ToString());
             var lastSearchResult = StateManager.Get<string>(Result.LastSearchResult.ToString());
 
-            Assert.AreEqual(openRestaurantsSearchResultCount, openRestaurantsSubHeaderValue);
+       
             Assert.That(firstSearchResult.ContainsString(searchedRestaurant, StringComparison.OrdinalIgnoreCase));
             Assert.That(lastSearchResult.ContainsString(searchedRestaurant, StringComparison.OrdinalIgnoreCase));
+
+            if (_searchResults._openRestaurantsAvailable)
+            {
+                var openRestaurantsSubHeaderValue = StateManager.Get<int>(Result.OpenRestaurantsCountFromSubheader.ToString());
+                var openRestaurantsSearchResultCount = StateManager.Get<int>(Result.OpenRestaurantsFromSearchResult.ToString());
+
+                Assert.AreEqual(openRestaurantsSearchResultCount, openRestaurantsSubHeaderValue);
+            }
         }
 
         [Then(@"I should see the error message")]

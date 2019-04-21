@@ -11,6 +11,7 @@ namespace RestaurantSearch.UITests.Steps
     {
         private readonly SearchResultPage _searchResultPage;
         private readonly SharedAction _sharedAction;
+        public bool _openRestaurantsAvailable;
 
         public SearchResults(SearchResultPage searchResultPage, SharedAction sharedActions)
         {
@@ -34,7 +35,7 @@ namespace RestaurantSearch.UITests.Steps
              _searchResultPage.GetSubheaderForRestaurantAsync();
 
             var restaurantsAvailable = await _searchResultPage.RestuarantsAvailable();
-            var openRestaurantsAvailable = await _searchResultPage.OpenRestaurantsAvailable();
+            _openRestaurantsAvailable = await _searchResultPage.OpenRestaurantsAvailable();
 
             //Check complete list of restaurants in the search result page
             if (restaurantsAvailable)
@@ -42,7 +43,7 @@ namespace RestaurantSearch.UITests.Steps
                 //Save first and last search results for the specified restaurant
                 _searchResultPage.GetSearchResultsFromSearchResultPageAsync();
             }
-            if (openRestaurantsAvailable)
+            if (_openRestaurantsAvailable)
             {
                 _searchResultPage.GetOpenResturantsCountFromSearchResultPageAsync();
                 _searchResultPage.GetOpenResturantsTotalFromSubheader();
