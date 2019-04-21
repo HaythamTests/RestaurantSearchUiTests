@@ -77,7 +77,7 @@ namespace RestaurantSearch.UITests.Steps
         }
 
         [Then(@"I should see the following texts and links on the page")]
-        public void ThenIShouldSeeTextsAndLinks(Table table)
+        public void ThenIShouldSeeErrorMessagesOnPage(Table table)
         {
             var searchResultValidations = table.CreateSet<SearchResultValidations>();
 
