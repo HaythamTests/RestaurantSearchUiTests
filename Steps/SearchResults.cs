@@ -41,17 +41,17 @@ namespace RestaurantSearch.UITests.Steps
             if (restaurantsAvailable)
             {
                 //Save first and last search results for the specified restaurant
-                _searchResultPage.GetSearchResultsFromSearchResultPageAsync();
+                await _searchResultPage.GetSearchResultsFromSearchResultPageAsync();
             }
             if (_openRestaurantsAvailable)
             {
-                _searchResultPage.GetOpenResturantsCountFromSearchResultPageAsync();
+                await _searchResultPage.GetOpenResturantsCountFromSearchResultPageAsync();
                 _searchResultPage.GetOpenResturantsTotalFromSubheader();
             }
             if (!restaurantsAvailable)
             {
                 //Save on-screen validations for the invalid search
-                _searchResultPage.GetOnscreenValidationsFromSearchResultPageAsync();
+                await _searchResultPage.GetOnscreenValidationsFromSearchResultPageAsync();
             }
         }
     }

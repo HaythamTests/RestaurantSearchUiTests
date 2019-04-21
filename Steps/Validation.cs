@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using RestaurantSearch.UITests.Helpers;
 using RestaurantSearch.UITests.Models;
@@ -77,10 +78,10 @@ namespace RestaurantSearch.UITests.Steps
         }
 
         [Then(@"I should see the error message")]
-        public void ThenIShouldSeeErrorMessage(Table table)
+        public async Task ThenIShouldSeeErrorMessageAsync(Table table)
         {
             var searchResultValidations = table.CreateSet<SearchResultValidations>();
-             _searchPage.GetErrorInformationFromSearchPageAsync();
+            await _searchPage.GetErrorInformationFromSearchPageAsync();
 
             foreach (var validation in searchResultValidations)
             {

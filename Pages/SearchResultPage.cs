@@ -88,7 +88,7 @@ namespace RestaurantSearch.UITests.Pages
             StateManager.Set(Result.RestaurantSubHeader.ToString(), subHeaderText);
         }
 
-        public async void GetSearchResultsFromSearchResultPageAsync()
+        public async Task GetSearchResultsFromSearchResultPageAsync()
         {
             var getSearchResults = await SearchResults();
 
@@ -96,7 +96,7 @@ namespace RestaurantSearch.UITests.Pages
             StateManager.Set(Result.LastSearchResult.ToString(), getSearchResults.Last().Text);
         }
 
-        public async void GetOpenResturantsCountFromSearchResultPageAsync()
+        public async Task GetOpenResturantsCountFromSearchResultPageAsync()
         {
             var getOpenRestaurantsCount = await OpenRestaurantsSearchResult();
 
@@ -110,7 +110,7 @@ namespace RestaurantSearch.UITests.Pages
             StateManager.Set(Result.OpenRestaurantsCountFromSubheader.ToString(), int.Parse(subheaderText.Split(new char[] { ' ' })[0]));
         }
 
-        public async void GetOnscreenValidationsFromSearchResultPageAsync()
+        public async Task GetOnscreenValidationsFromSearchResultPageAsync()
         {
             StateManager.Set(Result.EmptySearchResultMessage.ToString(), await EmptySearchResultMessage());
             StateManager.Set(Result.SearchButtonInvalidSearchText.ToString(), await SearchButtonInvalidSearchText());

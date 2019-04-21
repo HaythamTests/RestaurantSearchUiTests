@@ -36,7 +36,7 @@ namespace RestaurantSearch.UITests.Pages
         //Page method
         public Task<string> PostCodeErrorMessage() => Task.FromResult(ErrorMessage.Text);
 
-        public async void GetErrorInformationFromSearchPageAsync()
+        public async Task GetErrorInformationFromSearchPageAsync()
         {
             StateManager.Set(Result.PostCodeErrorMessage.ToString(), await PostCodeErrorMessage());
 
