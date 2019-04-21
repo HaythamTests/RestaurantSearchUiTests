@@ -21,7 +21,6 @@ If the restaurant search was valid but returned no open restaurants, then the te
 
 Invalid Restaurant Search:
 The test asserts on various error messages and some links displayed on the search result area, which includes: 
-1)	Subheader contains the default message,
-2)	We’re coming up empty… message.
-3)	Show All Restaurants – text, link.
-4)	Tip Us Off – text, link.
+1)	We’re coming up empty… .
+2)	Show All Restaurants – text, link.
+3)	Tip Us Off – text, link.
