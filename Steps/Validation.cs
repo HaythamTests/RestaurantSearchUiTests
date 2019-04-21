@@ -13,6 +13,7 @@ namespace RestaurantSearch.UITests.Steps
     {
         private readonly SearchPage _searchPage;
         private readonly SearchResults _searchResults;
+        private readonly string _openRestaurantUnavailableSubheader = "No open restaurants";
 
         public Validation(SearchPage searchPage, SearchResults searchResults)
         {
@@ -20,36 +21,44 @@ namespace RestaurantSearch.UITests.Steps
             _searchResults = searchResults;
         }    
         
-        [Then(@"I should see the correct subheader details in the Search Results page")]
+        [Then(@"I should see the correct subheader details in the search results page")]
         public void ThenIShouldSeeThePostcodeInTheSubheader()
         {
-            var actualSubheaderforRestaurant = StateManager.Get<string>(Result.RestaurantSubHeader.ToString());
+            var subheaderAfterRestaurantSearch = StateManager.Get<string>(Result.RestaurantSubHeader.ToString());
             var expectedPostcode = StateManager.Get<string>(Input.Postcode.ToString());
             var defaultHeaderForTotalRestaurants = StateManager.Get<string>(Result.DefaultSubheaderForGivenPostcode.ToString());
 
-            Assert.That(actualSubheaderforRestaurant.Contains(expectedPostcode));
-            Assert.AreNotEqual(actualSubheaderforRestaurant, defaultHeaderForTotalRestaurants) ;
+            Assert.That(subheaderAfterRestaurantSearch.Contains(expectedPostcode));
+            Assert.AreNotEqual(subheaderAfterRestaurantSearch, defaultHeaderForTotalRestaurants) ;
         }
-
 
         [Then(@"the restaurant name is included in the first and last search result titles")]
         public void ThenIShouldSeeTheRestaurantNameInTheSearhResult()
         {
             var searchedRestaurant = StateManager.Get<string>(Input.Restaurant.ToString());
-         
             var firstSearchResult = StateManager.Get<string>(Result.FirstSearchResult.ToString());
             var lastSearchResult = StateManager.Get<string>(Result.LastSearchResult.ToString());
 
        
             Assert.That(firstSearchResult.ContainsString(searchedRestaurant, StringComparison.OrdinalIgnoreCase));
             Assert.That(lastSearchResult.ContainsString(searchedRestaurant, StringComparison.OrdinalIgnoreCase));
+        }
 
+        [Then(@"the search result count is reflected in the subheader")]
+        public void ThenTheSearchResultCountReflectsTheDetailsInTheSubHeader()
+        {
             if (_searchResults._openRestaurantsAvailable)
             {
                 var openRestaurantsSubHeaderValue = StateManager.Get<int>(Result.OpenRestaurantsCountFromSubheader.ToString());
                 var openRestaurantsSearchResultCount = StateManager.Get<int>(Result.OpenRestaurantsFromSearchResult.ToString());
 
                 Assert.AreEqual(openRestaurantsSearchResultCount, openRestaurantsSubHeaderValue);
+            }
+            else
+            {
+                var subheaderAfterRestaurantSearch = StateManager.Get<string>(Result.RestaurantSubHeader.ToString());
+
+                Assert.That(subheaderAfterRestaurantSearch.ContainsString(_openRestaurantUnavailableSubheader, StringComparison.OrdinalIgnoreCase));
             }
         }
 
@@ -88,10 +97,6 @@ namespace RestaurantSearch.UITests.Steps
                 Assert.That(tipUsOffText.ContainsString(validation.TipUsOffText, StringComparison.OrdinalIgnoreCase));
                 Assert.That(tipUsOffLink.ContainsString(validation.TipUsOffLink, StringComparison.OrdinalIgnoreCase));
             }
-
-            //Assert.Equals(searchResultValidations.Count(), StateManager.Get<string>());
         }
-
-        //private static readonly Func<string, bool> ValidateAgainstTotalRestaurantsForGivenPostcode = validation => !validation.ContainsString(TotalNumberOfRestaurantsForPostcode(), StringComparison.CurrentCulture);
     }
 }

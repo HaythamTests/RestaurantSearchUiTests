@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace RestaurantSearch.UITests.Features
+namespace RestaurantSearch.Tests.Features
 {
     using TechTalk.SpecFlow;
     
@@ -81,9 +81,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 8
    testRunner.When(string.Format("I search for restaurant {0}", restaurant), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
-  testRunner.Then("I should see the correct subheader details in the Search Results page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.Then("I should see the correct subheader details in the search results page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 10
   testRunner.And("the restaurant name is included in the first and last search result titles", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 11
+  testRunner.And("the search result count is reflected in the subheader", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -93,16 +95,16 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void NegativeScenarioInvalidPostcodeInSearchPage()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("(Negative Scenario) Invalid Postcode in Search page", ((string[])(null)));
-#line 18
-this.ScenarioSetup(scenarioInfo);
 #line 19
+this.ScenarioSetup(scenarioInfo);
+#line 20
    testRunner.Given("I want food in area invalidSearchValue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "PostCodeErrorMessage"});
             table1.AddRow(new string[] {
                         "Please enter a full, valid postcode"});
-#line 20
+#line 21
   testRunner.Then("I should see the error message", ((string)(null)), table1, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -113,14 +115,14 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void NegativeScenarioInvalidRestaurantSearchInAnArea()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("(Negative Scenario) Invalid restaurant search in an area", ((string[])(null)));
-#line 24
-this.ScenarioSetup(scenarioInfo);
 #line 25
-   testRunner.Given("I want food in area AR51 1AA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 26
-   testRunner.When("I search for restaurant invalidSearchValue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+   testRunner.Given("I want food in area AR51 1AA", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 27
-  testRunner.Then("I should see the correct subheader details in the Search Results page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+   testRunner.When("I search for restaurant invalidSearchValue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 28
+  testRunner.Then("I should see the correct subheader details in the search results page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Subheader",
@@ -136,7 +138,7 @@ this.ScenarioSetup(scenarioInfo);
                         "https://www.just-eat.co.uk/area/",
                         "Tip us off",
                         "https://www.just-eat.co.uk/suggest-a-restaurant"});
-#line 28
+#line 29
   testRunner.And("I should see the following texts and links on the page", ((string)(null)), table2, "And ");
 #line hidden
             this.ScenarioCleanup();
