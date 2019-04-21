@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using RestaurantSearch.UITests.Helpers;
 using RestaurantSearch.UITests.Models;
@@ -35,19 +33,22 @@ namespace RestaurantSearch.UITests.Steps
         [Then(@"the restaurant name is included in the first and last search result titles")]
         public void ThenIShouldSeeTheRestaurantNameInTheSearhResult()
         {
-            var restaurant = StateManager.Get<string>(Input.Restaurant.ToString());
+            var searchedRestaurant = StateManager.Get<string>(Input.Restaurant.ToString());
+            var openRestaurantsSubHeaderValue = StateManager.Get<int>(Result.OpenRestaurantsCountFromSubheader.ToString());
+            var openRestaurantsSearchResultCount = StateManager.Get<int>(Result.OpenRestaurantsFromSearchResult.ToString());
             var firstSearchResult = StateManager.Get<string>(Result.FirstSearchResult.ToString());
             var lastSearchResult = StateManager.Get<string>(Result.LastSearchResult.ToString());
 
-            Assert.That(firstSearchResult.ContainsString(restaurant, StringComparison.OrdinalIgnoreCase));
-            Assert.That(lastSearchResult.ContainsString(restaurant, StringComparison.OrdinalIgnoreCase));
+            Assert.AreEqual(openRestaurantsSearchResultCount, openRestaurantsSubHeaderValue);
+            Assert.That(firstSearchResult.ContainsString(searchedRestaurant, StringComparison.OrdinalIgnoreCase));
+            Assert.That(lastSearchResult.ContainsString(searchedRestaurant, StringComparison.OrdinalIgnoreCase));
         }
 
         [Then(@"I should see the error message")]
-        public async Task ThenIShouldSeeErrorMessageAsync(Table table)
+        public void ThenIShouldSeeErrorMessage(Table table)
         {
             var searchResultValidations = table.CreateSet<SearchResultValidations>();
-            await _searchPage.GetErrorInformationFromSearchPageAsync();
+             _searchPage.GetErrorInformationFromSearchPageAsync();
 
             foreach (var validation in searchResultValidations)
             {
@@ -58,7 +59,7 @@ namespace RestaurantSearch.UITests.Steps
         }
 
         [Then(@"I should see the following texts and links on the page")]
-        public void ThenIShouldSeeErrorMessage(Table table)
+        public void ThenIShouldSeeTextsAndLinks(Table table)
         {
             var searchResultValidations = table.CreateSet<SearchResultValidations>();
 

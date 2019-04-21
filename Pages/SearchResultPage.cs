@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using RestaurantSearch.UITests.Helpers;
 using RestaurantSearch.UITests.Models;
@@ -26,6 +25,14 @@ namespace RestaurantSearch.UITests.Pages
         [FindsBy(How = How.CssSelector, Using = "[data-test-id='searchresults']")]
         public IWebElement RestaurantsAvailability { get; set; }
 
+        [FindsBy(How = How.CssSelector, 
+            Using = "[data-test-id='openrestaurants'] section[class*='is-active'] a [data-test-id='restaurant_info'] [data-test-id='restaurant_name']")]
+        public IList<IWebElement> OpenRestaurantsResults { get; set; }
+
+        [FindsBy(How = How.CssSelector,
+            Using = "[data-test-id='openrestaurants'] section[class*='is-active']")]
+        public IList<IWebElement> OpenRestaurantsAvailability { get; set; }
+
         [FindsBy(How = How.CssSelector, Using = "div[class*='is-active'] h2[class='alpha']")]
         public IWebElement EmptySearchMessage { get; set; }
 
@@ -48,11 +55,15 @@ namespace RestaurantSearch.UITests.Pages
 
         public Task<List<IWebElement>> SearchResults() => Task.FromResult(RestaurantSearchResults.ToList());
 
+        public Task<List<IWebElement>> OpenRestaurantsSearchResult() => Task.FromResult(OpenRestaurantsResults.ToList());
+
         public Task<bool> RestuarantsUnavailable() => Task.FromResult(RestaurantsAvailability.GetAttribute("class").Equals("is-visuallyHidden"));
 
-        private static string TotalNumberOfRestaurantsForPostcode() => StateManager.Get<string>(Result.DefaultSubheaderForGivenPostcode.ToString()).Split(new char[] {' '})[0];
+        public Task<bool> OpenRestaurantsAvailable() => Task.FromResult(OpenRestaurantsAvailability.Any( x => x.Displayed));
 
-        private static readonly Func<string, bool> ValidateByTotalRestaurantsForGivenPostcode = validation => !validation.ContainsString(TotalNumberOfRestaurantsForPostcode(), StringComparison.CurrentCulture);
+        private static string NumberOfRestaurantsForPostcodeFromSubheader() => StateManager.Get<string>(Result.DefaultSubheaderForGivenPostcode.ToString()).Split(new char[] {' '})[0];
+
+        private static readonly Func<string, bool> ValidateByTotalRestaurantsForGivenPostcode = validation => !validation.ContainsString(NumberOfRestaurantsForPostcodeFromSubheader(), StringComparison.CurrentCulture);
 
         public async Task<string> RestaurantHeaderAsync()
         {
@@ -70,20 +81,36 @@ namespace RestaurantSearch.UITests.Pages
 
         public Task<string> TipUsOffLink() => Task.FromResult(TipUsOff.GetAttribute("href"));
 
-        public async Task GetSubheaderForRestaurantAsync()
+        public async void GetSubheaderForRestaurantAsync()
         {
             var subHeaderText = await RestaurantHeaderAsync();
+
             StateManager.Set(Result.RestaurantSubHeader.ToString(), subHeaderText);
         }
 
-        public async Task GetFirstAndLastSearchResultsFromSearchResultPageAsync()
+        public async void GetSearchResultsFromSearchResultPageAsync()
         {
             var getSearchResults = await SearchResults();
+
             StateManager.Set(Result.FirstSearchResult.ToString(), getSearchResults.First().Text);
             StateManager.Set(Result.LastSearchResult.ToString(), getSearchResults.Last().Text);
         }
 
-        public async Task GetOnscreenValidationsFromSearchResultPageAsync()
+        public async void GetOpenResturantsCountFromSearchResultPageAsync()
+        {
+            var getOpenRestaurantsCount = await OpenRestaurantsSearchResult();
+
+            StateManager.Set<int>(Result.OpenRestaurantsFromSearchResult.ToString(), getOpenRestaurantsCount.Count());
+        }
+
+        public void GetOpenResturantsTotalFromSubheader()
+        {
+            var subheaderText = StateManager.Get<string>(Result.RestaurantSubHeader.ToString());
+
+            StateManager.Set(Result.OpenRestaurantsCountFromSubheader.ToString(), int.Parse(subheaderText.Split(new char[] { ' ' })[0]));
+        }
+
+        public async void GetOnscreenValidationsFromSearchResultPageAsync()
         {
             StateManager.Set(Result.EmptySearchResultMessage.ToString(), await EmptySearchResultMessage());
             StateManager.Set(Result.SearchButtonInvalidSearchText.ToString(), await SearchButtonInvalidSearchText());

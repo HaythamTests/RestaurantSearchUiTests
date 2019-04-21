@@ -6,6 +6,8 @@ namespace RestaurantSearch.UITests.Models
         PostCodeErrorMessage,
         DefaultSubheaderForGivenPostcode,
         RestaurantSubHeader,
+        OpenRestaurantsCountFromSubheader,
+        OpenRestaurantsFromSearchResult,
         EmptySearchResultMessage,
         FirstSearchResult,
         LastSearchResult,
