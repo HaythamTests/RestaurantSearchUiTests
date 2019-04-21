@@ -33,18 +33,21 @@ namespace RestaurantSearch.UITests.Steps
             //Save actual Subheader for the specified restaurant
              _searchResultPage.GetSubheaderForRestaurantAsync();
 
+            var restaurantsAvailable = await _searchResultPage.RestuarantsAvailable();
+            var openRestaurantsAvailable = await _searchResultPage.OpenRestaurantsAvailable();
+
             //Check complete list of restaurants in the search result page
-            if (!await _searchResultPage.RestuarantsUnavailable())
+            if (restaurantsAvailable)
             {
                 //Save first and last search results for the specified restaurant
                 _searchResultPage.GetSearchResultsFromSearchResultPageAsync();
             }
-            if (await _searchResultPage.OpenRestaurantsAvailable())
+            if (openRestaurantsAvailable)
             {
                 _searchResultPage.GetOpenResturantsCountFromSearchResultPageAsync();
                 _searchResultPage.GetOpenResturantsTotalFromSubheader();
             }
-            else
+            if (!restaurantsAvailable)
             {
                 //Save on-screen validations for the invalid search
                 _searchResultPage.GetOnscreenValidationsFromSearchResultPageAsync();

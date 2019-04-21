@@ -57,7 +57,7 @@ namespace RestaurantSearch.UITests.Pages
 
         public Task<List<IWebElement>> OpenRestaurantsSearchResult() => Task.FromResult(OpenRestaurantsResults.ToList());
 
-        public Task<bool> RestuarantsUnavailable() => Task.FromResult(RestaurantsAvailability.GetAttribute("class").Equals("is-visuallyHidden"));
+        public Task<bool> RestuarantsAvailable() => Task.FromResult(!RestaurantsAvailability.GetAttribute("class").Equals("is-visuallyHidden"));
 
         public Task<bool> OpenRestaurantsAvailable() => Task.FromResult(OpenRestaurantsAvailability.Any( x => x.Displayed));
 
