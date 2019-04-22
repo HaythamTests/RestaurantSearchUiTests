@@ -1,9 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using NUnit.Framework.Constraints;
-using NUnit.Framework.Interfaces;
 using RestaurantSearch.UITests.Helpers;
 using RestaurantSearch.UITests.Models;
 using RestaurantSearch.UITests.Pages;
@@ -92,17 +88,17 @@ namespace RestaurantSearch.UITests.Steps
             var tipUsOffText = StateManager.Get<string>(Result.TipUsOffText.ToString());
             var tipUsOffLink = StateManager.Get<string>(Result.TipUsOffLink.ToString());
 
-            ValidationHelper.AssertTrue(actualSubheaderforRestaurant, searchResultValidations.Select(x => x.Subheader).ToString());
+            ValidationHelper.AssertTrue(actualSubheaderforRestaurant, searchResultValidations.Any().ToString());
 
-            ValidationHelper.AssertTrue(emptySearchResultMessage, searchResultValidations.Select(x => x.EmptySearchResultMessage).ToString());
+            ValidationHelper.AssertTrue(emptySearchResultMessage, searchResultValidations.Any().ToString());
 
-            ValidationHelper.AssertTrue(searchButtonInvalidSearchText, searchResultValidations.Select(x => x.SearchButtonText).ToString());
+            ValidationHelper.AssertTrue(searchButtonInvalidSearchText, searchResultValidations.Any().ToString());
 
-            ValidationHelper.AssertTrue(searchButtonInvalidSearchLink, searchResultValidations.Select(x => x.SearchButtonLink).ToString());
+            ValidationHelper.AssertTrue(searchButtonInvalidSearchLink, searchResultValidations.Any().ToString());
 
-            ValidationHelper.AssertTrue(tipUsOffText, searchResultValidations.Select(x => x.TipUsOffText).ToString());
+            ValidationHelper.AssertTrue(tipUsOffText, searchResultValidations.Any().ToString());
 
-            ValidationHelper.AssertTrue(tipUsOffLink, searchResultValidations.Select(x => x.TipUsOffLink).ToString());
+            ValidationHelper.AssertTrue(tipUsOffLink, searchResultValidations.Any().ToString());
         }
     }
 }
