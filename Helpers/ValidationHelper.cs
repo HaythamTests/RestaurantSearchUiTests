@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace RestaurantSearch.UITests.Helpers
 {
@@ -25,5 +26,13 @@ namespace RestaurantSearch.UITests.Helpers
 
             return false;
         }
+
+        private static string AssertionExceptionMessage<T>(T actual, T expected) => $"Validation failed: '{actual}' doesn't contain or equal '{expected}'.";
+
+        public static void AssertTrue(string actualResult, string expectedResult) => Assert.True(actualResult.ContainsString(expectedResult, StringComparison.OrdinalIgnoreCase), AssertionExceptionMessage(actualResult, expectedResult));
+
+        public static void AssertEqual<T>(T actualResult, T expectedResult) => Assert.AreEqual(actualResult, expectedResult, AssertionExceptionMessage(actualResult, expectedResult));
+
+        public static void AssertNotEqual<T>(T actualResult, T expectedResult) => Assert.AreNotEqual(actualResult, expectedResult, AssertionExceptionMessage(actualResult, expectedResult));
     }
 }

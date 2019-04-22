@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
+using NUnit.Framework.Interfaces;
 using RestaurantSearch.UITests.Helpers;
 using RestaurantSearch.UITests.Models;
 using RestaurantSearch.UITests.Pages;
@@ -15,8 +17,8 @@ namespace RestaurantSearch.UITests.Steps
         private readonly SearchPage _searchPage;
         private readonly SearchResults _searchResults;
         private readonly string _openRestaurantUnavailableSubheader = "No open restaurants";
-        private static string AssertionExceptionMessage<T>(T actual, T expected) => $"Subheader validation failed: '{actual}' doesn't contain or equal '{expected}'.";
 
+    
         public Validation(SearchPage searchPage, SearchResults searchResults)
         {
             _searchPage = searchPage;
@@ -30,11 +32,9 @@ namespace RestaurantSearch.UITests.Steps
             var expectedPostcode = StateManager.Get<string>(Input.Postcode.ToString());
             var defaultHeaderForTotalRestaurants = StateManager.Get<string>(Result.DefaultSubheaderForGivenPostcode.ToString());
 
-            Assert.True(subheaderAfterRestaurantSearch.Contains(expectedPostcode), 
-                AssertionExceptionMessage(subheaderAfterRestaurantSearch, expectedPostcode));
+            ValidationHelper.AssertTrue(subheaderAfterRestaurantSearch, expectedPostcode);
 
-            Assert.AreNotEqual(subheaderAfterRestaurantSearch, defaultHeaderForTotalRestaurants,
-                AssertionExceptionMessage(subheaderAfterRestaurantSearch, defaultHeaderForTotalRestaurants));
+            ValidationHelper.AssertNotEqual(subheaderAfterRestaurantSearch, defaultHeaderForTotalRestaurants);
         }
 
         [Then(@"the restaurant name is included in the first and last search result titles")]
@@ -44,11 +44,9 @@ namespace RestaurantSearch.UITests.Steps
             var firstSearchResult = StateManager.Get<string>(Result.FirstSearchResult.ToString());
             var lastSearchResult = StateManager.Get<string>(Result.LastSearchResult.ToString());
 
-            Assert.True(firstSearchResult.ContainsString(searchedRestaurant, StringComparison.OrdinalIgnoreCase),
-                AssertionExceptionMessage(firstSearchResult, searchedRestaurant));
+            ValidationHelper.AssertTrue(firstSearchResult, searchedRestaurant);
 
-            Assert.True(lastSearchResult.ContainsString(searchedRestaurant, StringComparison.OrdinalIgnoreCase),
-                AssertionExceptionMessage(lastSearchResult, searchedRestaurant));
+            ValidationHelper.AssertTrue(lastSearchResult, searchedRestaurant);
         }
 
         [Then(@"the search result count is reflected in the subheader")]
@@ -59,15 +57,13 @@ namespace RestaurantSearch.UITests.Steps
                 var openRestaurantsSubHeaderValue = StateManager.Get<int>(Result.OpenRestaurantsCountFromSubheader.ToString());
                 var openRestaurantsSearchResultCount = StateManager.Get<int>(Result.OpenRestaurantsFromSearchResult.ToString());
 
-                Assert.AreEqual(openRestaurantsSearchResultCount, openRestaurantsSubHeaderValue, 
-                    AssertionExceptionMessage(openRestaurantsSearchResultCount, openRestaurantsSubHeaderValue));
+                ValidationHelper.AssertEqual(openRestaurantsSearchResultCount, openRestaurantsSubHeaderValue);
             }
             else
             {
                 var subheaderAfterRestaurantSearch = StateManager.Get<string>(Result.RestaurantSubHeader.ToString());
 
-                Assert.True(subheaderAfterRestaurantSearch.ContainsString(_openRestaurantUnavailableSubheader, StringComparison.OrdinalIgnoreCase),
-                    AssertionExceptionMessage(subheaderAfterRestaurantSearch, _openRestaurantUnavailableSubheader));
+                ValidationHelper.AssertTrue(subheaderAfterRestaurantSearch, _openRestaurantUnavailableSubheader);
             }
         }
 
@@ -81,8 +77,7 @@ namespace RestaurantSearch.UITests.Steps
             {
                 var actualPostcodeErrorMessage = StateManager.Get<string>(Result.PostCodeErrorMessage.ToString());
 
-                Assert.True(actualPostcodeErrorMessage.ContainsString(validation.PostCodeErrorMessage, StringComparison.OrdinalIgnoreCase),
-                    AssertionExceptionMessage(actualPostcodeErrorMessage, validation.PostCodeErrorMessage));
+                ValidationHelper.AssertTrue(actualPostcodeErrorMessage, validation.PostCodeErrorMessage);
             }
         }
 
@@ -95,30 +90,22 @@ namespace RestaurantSearch.UITests.Steps
             {
                 var actualSubheaderforRestaurant = StateManager.Get<string>(Result.RestaurantSubHeader.ToString());
                 var emptySearchResultMessage = StateManager.Get<string>(Result.EmptySearchResultMessage.ToString());
-                var searchButtonInvalidSearchText =
-                    StateManager.Get<string>(Result.SearchButtonInvalidSearchText.ToString());
-                var searchButtonInvalidSearchLink =
-                    StateManager.Get<string>(Result.SearchButtonInvalidSearchLink.ToString());
+                var searchButtonInvalidSearchText = StateManager.Get<string>(Result.SearchButtonInvalidSearchText.ToString());
+                var searchButtonInvalidSearchLink = StateManager.Get<string>(Result.SearchButtonInvalidSearchLink.ToString());
                 var tipUsOffText = StateManager.Get<string>(Result.TipUsOffText.ToString());
                 var tipUsOffLink = StateManager.Get<string>(Result.TipUsOffLink.ToString());
 
-                Assert.That(actualSubheaderforRestaurant.ContainsString(validation.Subheader,
-                    StringComparison.OrdinalIgnoreCase), AssertionExceptionMessage(actualSubheaderforRestaurant, validation.Subheader));
+                ValidationHelper.AssertTrue(actualSubheaderforRestaurant, validation.Subheader);
 
-                Assert.That(emptySearchResultMessage.ContainsString(validation.EmptySearchResultMessage,
-                    StringComparison.OrdinalIgnoreCase), AssertionExceptionMessage(emptySearchResultMessage, validation.EmptySearchResultMessage));
+                ValidationHelper.AssertTrue(emptySearchResultMessage, validation.EmptySearchResultMessage);
 
-                Assert.That(searchButtonInvalidSearchText.ContainsString(validation.SearchButtonText,
-                    StringComparison.OrdinalIgnoreCase), AssertionExceptionMessage(searchButtonInvalidSearchText, validation.SearchButtonText));
+                ValidationHelper.AssertTrue(searchButtonInvalidSearchText, validation.SearchButtonText);
 
-                Assert.That(searchButtonInvalidSearchLink.ContainsString(validation.SearchButtonLink,
-                    StringComparison.OrdinalIgnoreCase), AssertionExceptionMessage(searchButtonInvalidSearchLink, validation.SearchButtonLink));
+                ValidationHelper.AssertTrue(searchButtonInvalidSearchLink, validation.SearchButtonLink);
 
-                Assert.That(tipUsOffText.ContainsString(validation.TipUsOffText, StringComparison.OrdinalIgnoreCase),
-                    AssertionExceptionMessage(tipUsOffText, validation.SearchButtonText));
+                ValidationHelper.AssertTrue(tipUsOffText, validation.TipUsOffText);
 
-                Assert.That(tipUsOffLink.ContainsString(validation.TipUsOffLink, StringComparison.OrdinalIgnoreCase),
-                    AssertionExceptionMessage(tipUsOffLink, validation.SearchButtonLink)); 
+                ValidationHelper.AssertTrue(tipUsOffLink, validation.TipUsOffLink);
             }
         }
     }
