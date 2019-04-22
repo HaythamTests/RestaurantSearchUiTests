@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
@@ -73,12 +74,10 @@ namespace RestaurantSearch.UITests.Steps
             var searchResultValidations = table.CreateSet<SearchResultValidations>();
             await _searchPage.GetErrorInformationFromSearchPageAsync();
 
-            foreach (var validation in searchResultValidations)
-            {
-                var actualPostcodeErrorMessage = StateManager.Get<string>(Result.PostCodeErrorMessage.ToString());
+            var actualPostcodeErrorMessage = StateManager.Get<string>(Result.PostCodeErrorMessage.ToString());
+            var expectedPostCodeErrorMessage = searchResultValidations.Select(x => x.PostCodeErrorMessage).ToString();
 
-                ValidationHelper.AssertTrue(actualPostcodeErrorMessage, validation.PostCodeErrorMessage);
-            }
+            ValidationHelper.AssertTrue(actualPostcodeErrorMessage, expectedPostCodeErrorMessage);
         }
 
         [Then(@"I should see the following texts and links on the page")]
@@ -86,27 +85,24 @@ namespace RestaurantSearch.UITests.Steps
         {
             var searchResultValidations = table.CreateSet<SearchResultValidations>();
 
-            foreach (var validation in searchResultValidations)
-            {
-                var actualSubheaderforRestaurant = StateManager.Get<string>(Result.RestaurantSubHeader.ToString());
-                var emptySearchResultMessage = StateManager.Get<string>(Result.EmptySearchResultMessage.ToString());
-                var searchButtonInvalidSearchText = StateManager.Get<string>(Result.SearchButtonInvalidSearchText.ToString());
-                var searchButtonInvalidSearchLink = StateManager.Get<string>(Result.SearchButtonInvalidSearchLink.ToString());
-                var tipUsOffText = StateManager.Get<string>(Result.TipUsOffText.ToString());
-                var tipUsOffLink = StateManager.Get<string>(Result.TipUsOffLink.ToString());
+            var actualSubheaderforRestaurant = StateManager.Get<string>(Result.RestaurantSubHeader.ToString());
+            var emptySearchResultMessage = StateManager.Get<string>(Result.EmptySearchResultMessage.ToString());
+            var searchButtonInvalidSearchText = StateManager.Get<string>(Result.SearchButtonInvalidSearchText.ToString());
+            var searchButtonInvalidSearchLink = StateManager.Get<string>(Result.SearchButtonInvalidSearchLink.ToString());
+            var tipUsOffText = StateManager.Get<string>(Result.TipUsOffText.ToString());
+            var tipUsOffLink = StateManager.Get<string>(Result.TipUsOffLink.ToString());
 
-                ValidationHelper.AssertTrue(actualSubheaderforRestaurant, validation.Subheader);
+            ValidationHelper.AssertTrue(actualSubheaderforRestaurant, searchResultValidations.Select(x => x.Subheader).ToString());
 
-                ValidationHelper.AssertTrue(emptySearchResultMessage, validation.EmptySearchResultMessage);
+            ValidationHelper.AssertTrue(emptySearchResultMessage, searchResultValidations.Select(x => x.EmptySearchResultMessage).ToString());
 
-                ValidationHelper.AssertTrue(searchButtonInvalidSearchText, validation.SearchButtonText);
+            ValidationHelper.AssertTrue(searchButtonInvalidSearchText, searchResultValidations.Select(x => x.SearchButtonText).ToString());
 
-                ValidationHelper.AssertTrue(searchButtonInvalidSearchLink, validation.SearchButtonLink);
+            ValidationHelper.AssertTrue(searchButtonInvalidSearchLink, searchResultValidations.Select(x => x.SearchButtonLink).ToString());
 
-                ValidationHelper.AssertTrue(tipUsOffText, validation.TipUsOffText);
+            ValidationHelper.AssertTrue(tipUsOffText, searchResultValidations.Select(x => x.TipUsOffText).ToString());
 
-                ValidationHelper.AssertTrue(tipUsOffLink, validation.TipUsOffLink);
-            }
+            ValidationHelper.AssertTrue(tipUsOffLink, searchResultValidations.Select(x => x.TipUsOffLink).ToString());
         }
     }
 }
