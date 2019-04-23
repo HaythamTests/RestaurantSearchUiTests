@@ -80,7 +80,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 8
    testRunner.When(string.Format("I search for restaurant {0}", restaurant), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
-  testRunner.And("I wait for restaurant results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And("I wait for the restaurant results page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
   testRunner.Then("I should see the correct subheader details in the search results page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 11
@@ -123,7 +123,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 27
    testRunner.When("I search for restaurant invalidSearchValue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 28
-  testRunner.And("I wait for restaurant results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And("I wait for the restaurant results page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 29
   testRunner.Then("I should see the correct subheader details in the search results page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

@@ -36,7 +36,7 @@ namespace RestaurantSearch.UITests.Steps
              _searchResultPage.GetSubheaderForRestaurantAsync();            
         }
 
-        [When(@"I wait for restaurant results")]
+        [When(@"I wait for the restaurant results page")]
         public async Task WhenIWaitForRestaurantResults()
         {
             var restaurantsAvailable = await _searchResultPage.RestuarantsAvailable();
