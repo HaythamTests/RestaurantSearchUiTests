@@ -71,9 +71,11 @@ namespace RestaurantSearch.UITests.Steps
             await _searchPage.GetErrorInformationFromSearchPageAsync();
 
             var actualPostcodeErrorMessage = StateManager.Get<string>(Result.PostCodeErrorMessage.ToString());
-            var expectedPostCodeErrorMessage = searchResultValidations.Select(x => x.PostCodeErrorMessage).ToString();
 
-            ValidationHelper.AssertTrue(actualPostcodeErrorMessage, expectedPostCodeErrorMessage);
+            foreach (var expected in searchResultValidations)
+            {
+                ValidationHelper.AssertTrue(actualPostcodeErrorMessage, expected.PostCodeErrorMessage);
+            }           
         }
 
         [Then(@"I should see the following texts and links on the page")]
@@ -88,17 +90,20 @@ namespace RestaurantSearch.UITests.Steps
             var tipUsOffText = StateManager.Get<string>(Result.TipUsOffText.ToString());
             var tipUsOffLink = StateManager.Get<string>(Result.TipUsOffLink.ToString());
 
-            ValidationHelper.AssertTrue(actualSubheaderforRestaurant, searchResultValidations.Any().ToString());
+            foreach (var expected in searchResultValidations)
+            {
+                ValidationHelper.AssertTrue(actualSubheaderforRestaurant, expected.Subheader);
 
-            ValidationHelper.AssertTrue(emptySearchResultMessage, searchResultValidations.Any().ToString());
+                ValidationHelper.AssertTrue(emptySearchResultMessage, expected.EmptySearchResultMessage);
 
-            ValidationHelper.AssertTrue(searchButtonInvalidSearchText, searchResultValidations.Any().ToString());
+                ValidationHelper.AssertTrue(searchButtonInvalidSearchText, expected.SearchButtonText);
 
-            ValidationHelper.AssertTrue(searchButtonInvalidSearchLink, searchResultValidations.Any().ToString());
+                ValidationHelper.AssertTrue(searchButtonInvalidSearchLink, expected.SearchButtonLink);
 
-            ValidationHelper.AssertTrue(tipUsOffText, searchResultValidations.Any().ToString());
+                ValidationHelper.AssertTrue(tipUsOffText, expected.TipUsOffText);
 
-            ValidationHelper.AssertTrue(tipUsOffLink, searchResultValidations.Any().ToString());
+                ValidationHelper.AssertTrue(tipUsOffLink, expected.TipUsOffLink);
+            }
         }
     }
 }
