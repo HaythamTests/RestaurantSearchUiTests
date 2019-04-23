@@ -16,6 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Features\PostcodeSearch.feature.cs">
+      <DependentUpon>PostcodeSearch.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Features\RestaurantSearch.feature.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -29,6 +34,10 @@
   <ItemGroup>
     <None Update="Driver\chromedriver.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Features\PostcodeSearch.feature">
+      <LastGenOutput>PostcodeSearch.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
     </None>
     <None Update="Features\RestaurantSearch.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

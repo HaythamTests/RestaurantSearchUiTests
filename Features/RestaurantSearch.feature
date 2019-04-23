@@ -3,7 +3,7 @@
  		As a hungry customer
  		I want to be able to find restaurants in my area
 
-Scenario Outline: (Positive Scenario) Search for restaurant(s) in an area
+Scenario Outline: Search for open restaurant(s) in an area
  		Given I want food in area <postcode>
  		When I search for restaurant <restaurant>
 		And I wait for the restaurant results page
@@ -14,15 +14,19 @@ Examples:
 | postcode | restaurant                       |
 | AR51 1AA | Domino's                         |
 | EC2Y 8BN | Papa John                        |
+
+Scenario Outline: Search for pre-ordering restaurant(s) in an area
+ 		Given I want food in area <postcode>
+ 		When I search for restaurant <restaurant>
+		And I wait for the restaurant results page
+		Then I should see the correct subheader details in the search results page
+		And the restaurant name is included in the first and last search result titles
+		And the search result count is reflected in the subheader
+Examples:
+| postcode | restaurant                       |
 | WC2H 7LE | subway goodge                    |
 
-Scenario: (Negative Scenario) Invalid Postcode in Search page
- 		Given I want food in area invalidSearchValue
-		Then I should see the error message
-| PostCodeErrorMessage                |
-| Please enter a full, valid postcode |
-
-Scenario: (Negative Scenario) Invalid restaurant search in an area
+Scenario: Invalid restaurant search in an area
  		Given I want food in area AR51 1AA
  		When I search for restaurant invalidSearchValue
 		And I wait for the restaurant results page
