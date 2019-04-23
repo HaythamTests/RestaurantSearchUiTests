@@ -33,6 +33,12 @@ namespace RestaurantSearch.UITests.Pages
             _driver.Navigate().GoToUrl(SearchUrl);
         }
 
+        public void Search(IWebElement searchType, string input)
+        {
+            searchType.Clear();
+            searchType.SendKeys(input);
+        }
+
         //Page method
         public Task<string> PostCodeErrorMessage() => Task.FromResult(ErrorMessage.Text);
 

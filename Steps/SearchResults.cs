@@ -10,13 +10,13 @@ namespace RestaurantSearch.UITests.Steps
     public class SearchResults
     {
         private readonly SearchResultPage _searchResultPage;
-        private readonly SharedAction _sharedAction;
+        private readonly SearchPage _searchPage;
         public bool _openRestaurantsAvailable;
 
-        public SearchResults(SearchResultPage searchResultPage, SharedAction sharedActions)
+        public SearchResults(SearchResultPage searchResultPage, SearchPage searchPage)
         {
             _searchResultPage = searchResultPage;
-            _sharedAction = sharedActions;
+            _searchPage = searchPage;
         }
 
         [Given(@"I search for restaurant (.*)")]
@@ -29,7 +29,7 @@ namespace RestaurantSearch.UITests.Steps
             _searchResultPage.StoreDefaultHeaderForGivenPostcode();
 
             //Restaurant search
-            _sharedAction.Search(_searchResultPage.RestaurantSearchInput, restaurant);
+            _searchPage.Search(_searchResultPage.RestaurantSearchInput, restaurant);
 
             //Save actual Subheader for the specified restaurant
              _searchResultPage.GetSubheaderForRestaurantAsync();

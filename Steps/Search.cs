@@ -12,12 +12,10 @@ namespace RestaurantSearch.UITests.Steps
     {
         private readonly IWebDriver _driver;
         private SearchPage _searchPage;
-        private readonly SharedAction _sharedAction;
 
-        public Search(IWebDriver driver, SharedAction sharedAction)
+        public Search(IWebDriver driver)
         {
             _driver = driver;
-            _sharedAction = sharedAction;
         }
         //Before Scenario: start up
         [BeforeScenario]
@@ -41,7 +39,7 @@ namespace RestaurantSearch.UITests.Steps
             _searchPage.Navigate();
 
             //Search by Postcode and submit
-            _sharedAction.Search(_searchPage.PostcodeSearchInput, postcode);
+            _searchPage.Search(_searchPage.PostcodeSearchInput, postcode);
             _searchPage.SearchButton.Click();         
         }
     }

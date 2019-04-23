@@ -75,7 +75,8 @@ namespace RestaurantSearch.UITests.Steps
             foreach (var expected in searchResultValidations)
             {
                 ValidationHelper.AssertTrue(actualPostcodeErrorMessage, expected.PostCodeErrorMessage);
-            }           
+            }
+           
         }
 
         [Then(@"I should see the following texts and links on the page")]
