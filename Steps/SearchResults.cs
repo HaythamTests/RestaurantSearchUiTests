@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using RestaurantSearch.UITests.Helpers;
 using RestaurantSearch.UITests.Models;
 using RestaurantSearch.UITests.Pages;
@@ -21,7 +22,7 @@ namespace RestaurantSearch.UITests.Steps
 
         [Given(@"I search for restaurant (.*)")]
         [When(@"I search for restaurant (.*)")]
-        public async Task WhenISearchForRestaurants(string restaurant)
+        public void WhenISearchForRestaurants(string restaurant)
         {
             StateManager.Set(Input.Restaurant.ToString(), restaurant);
 
@@ -32,8 +33,12 @@ namespace RestaurantSearch.UITests.Steps
             _searchPage.Search(_searchResultPage.RestaurantSearchInput, restaurant);
 
             //Save actual Subheader for the specified restaurant
-             _searchResultPage.GetSubheaderForRestaurantAsync();
+             _searchResultPage.GetSubheaderForRestaurantAsync();            
+        }
 
+        [When(@"I wait for the restaurant resutls")]
+        public async Task WhenIWaitForRestaurantResults()
+        {
             var restaurantsAvailable = await _searchResultPage.RestuarantsAvailable();
             _openRestaurantsAvailable = await _searchResultPage.OpenRestaurantsAvailable();
 
