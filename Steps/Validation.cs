@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using RestaurantSearch.UITests.Helpers;
+﻿using RestaurantSearch.UITests.Helpers;
 using RestaurantSearch.UITests.Models;
 using RestaurantSearch.UITests.Pages;
 using TechTalk.SpecFlow;
@@ -65,18 +63,17 @@ namespace RestaurantSearch.UITests.Steps
         }
 
         [Then(@"I should see the error message")]
-        public async Task ThenIShouldSeeErrorMessageAsync(Table table)
+        public void ThenIShouldSeeErrorMessage(Table table)
         {
             var searchResultValidations = table.CreateSet<SearchResultValidations>();
-            await _searchPage.GetErrorInformationFromSearchPageAsync();
+            _searchPage.GetErrorInformationFromSearchPage();
 
             var actualPostcodeErrorMessage = StateManager.Get<string>(Result.PostCodeErrorMessage.ToString());
 
             foreach (var expected in searchResultValidations)
             {
                 ValidationHelper.AssertTrue(actualPostcodeErrorMessage, expected.PostCodeErrorMessage);
-            }
-           
+            }   
         }
 
         [Then(@"I should see the following texts and links on the page")]

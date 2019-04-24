@@ -22,7 +22,7 @@ namespace RestaurantSearch.UITests.Steps
 
         [Given(@"I search for restaurant (.*)")]
         [When(@"I search for restaurant (.*)")]
-        public void WhenISearchForRestaurants(string restaurant)
+        public async Task WhenISearchForRestaurants(string restaurant)
         {
             StateManager.Set(Input.Restaurant.ToString(), restaurant);
 
@@ -33,30 +33,30 @@ namespace RestaurantSearch.UITests.Steps
             _searchPage.Search(_searchResultPage.RestaurantSearchInput, restaurant);
 
             //Save actual Subheader for the specified restaurant
-             _searchResultPage.GetSubheaderForRestaurantAsync();            
+            await _searchResultPage.GetSubheaderForRestaurantAsync();            
         }
 
         [When(@"I wait for the restaurant results page")]
-        public async Task WhenIWaitForRestaurantResults()
+        public void WhenIWaitForRestaurantResults()
         {
-            var restaurantsAvailable = await _searchResultPage.RestuarantsAvailable();
-            _openRestaurantsAvailable = await _searchResultPage.OpenRestaurantsAvailable();
+            var restaurantsAvailable =  _searchResultPage.RestuarantsAvailable();
+            _openRestaurantsAvailable =  _searchResultPage.OpenRestaurantsAvailable();
 
             //Check complete list of restaurants in the search result page
             if (restaurantsAvailable)
             {
                 //Save first and last search results for the specified restaurant
-                await _searchResultPage.GetSearchResultsFromSearchResultPageAsync();
+                _searchResultPage.GetSearchResultsFromSearchResultPage();
             }
             if (_openRestaurantsAvailable)
             {
-                await _searchResultPage.GetOpenResturantsCountFromSearchResultPageAsync();
+                _searchResultPage.GetOpenResturantsCountFromSearchResultPage();
                 _searchResultPage.GetOpenResturantsTotalFromSubheader();
             }
             if (!restaurantsAvailable)
             {
                 //Save on-screen validations for the invalid search
-                await _searchResultPage.GetOnscreenValidationsFromSearchResultPageAsync();
+                _searchResultPage.GetOnscreenValidationsFromSearchResultPage();
             }
         }
     }
