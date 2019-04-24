@@ -1,5 +1,4 @@
-﻿using System.IO;
-using BoDi;
+﻿using BoDi;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using TechTalk.SpecFlow;
@@ -19,7 +18,10 @@ namespace RestaurantSearch.UITests.Helpers
         [BeforeScenario(Order = 0)]
         public void InitializeWebDriver()
         {
-            _objectContainer.RegisterInstanceAs<IWebDriver>(new ChromeDriver(Path.GetFullPath(@"Driver/")));
+            ChromeDriverService service = ChromeDriverService.CreateDefaultService(@"chromedriver.exe");
+            service.SuppressInitialDiagnosticInformation = true;
+            service.HideCommandPromptWindow = true;
+            _objectContainer.RegisterInstanceAs<IWebDriver>(new ChromeDriver(service));
         }
     }
 }
