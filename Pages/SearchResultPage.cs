@@ -53,13 +53,13 @@ namespace RestaurantSearch.UITests.Pages
 
         public void StoreDefaultHeaderForGivenPostcode() => StateManager.Set(Result.DefaultSubheaderForGivenPostcode.ToString(), DefaultHeaderForGivenPostcode().Result);
 
-        public Task<List<IWebElement>> SearchResults() => Task.FromResult(RestaurantSearchResults.ToList());
+        public List<IWebElement> SearchResults() => RestaurantSearchResults.ToList();
 
-        public Task<List<IWebElement>> OpenRestaurantsSearchResult() => Task.FromResult(OpenRestaurantsResults.ToList());
+        public List<IWebElement> OpenRestaurantsSearchResult() => OpenRestaurantsResults.ToList();
 
-        public Task<bool> RestuarantsAvailable() => Task.FromResult(!RestaurantsAvailability.GetAttribute("class").Equals("is-visuallyHidden"));
+        public bool RestuarantsAvailable() => !RestaurantsAvailability.GetAttribute("class").Equals("is-visuallyHidden");
 
-        public Task<bool> OpenRestaurantsAvailable() => Task.FromResult(OpenRestaurantsAvailability.Any( x => x.Displayed));
+        public bool OpenRestaurantsAvailable() => OpenRestaurantsAvailability.Any( x => x.Displayed);
 
         private static string NumberOfRestaurantsForPostcodeFromSubheader() => StateManager.Get<string>(Result.DefaultSubheaderForGivenPostcode.ToString()).Split(new char[] {' '})[0];
 
@@ -71,34 +71,34 @@ namespace RestaurantSearch.UITests.Pages
             return await DefaultHeaderForGivenPostcode();
         }
 
-        public Task<string> EmptySearchResultMessage() => Task.FromResult(EmptySearchMessage.Text);
+        public string EmptySearchResultMessage() => EmptySearchMessage.Text;
 
-        public Task<string> SearchButtonInvalidSearchText() => Task.FromResult(SearchButtonInvalidSearch.Text);
+        public string SearchButtonInvalidSearchText() => SearchButtonInvalidSearch.Text;
 
-        public Task<string> SearchButtonInvalidSearchLink() => Task.FromResult(SearchButtonInvalidSearch.GetAttribute("href"));
+        public string SearchButtonInvalidSearchLink() => SearchButtonInvalidSearch.GetAttribute("href");
 
-        public Task<string> TipUsOffText() => Task.FromResult(TipUsOff.Text);
+        public string TipUsOffText() => TipUsOff.Text;
 
-        public Task<string> TipUsOffLink() => Task.FromResult(TipUsOff.GetAttribute("href"));
+        public string TipUsOffLink() => TipUsOff.GetAttribute("href");
 
-        public async void GetSubheaderForRestaurantAsync()
+        public async Task GetSubheaderForRestaurantAsync()
         {
             var subHeaderText = await RestaurantHeaderAsync();
 
             StateManager.Set(Result.RestaurantSubHeader.ToString(), subHeaderText);
         }
 
-        public async Task GetSearchResultsFromSearchResultPageAsync()
+        public void GetSearchResultsFromSearchResultPage()
         {
-            var getSearchResults = await SearchResults();
+            var getSearchResults = SearchResults();
 
             StateManager.Set(Result.FirstSearchResult.ToString(), getSearchResults.First().Text);
             StateManager.Set(Result.LastSearchResult.ToString(), getSearchResults.Last().Text);
         }
 
-        public async Task GetOpenResturantsCountFromSearchResultPageAsync()
+        public void GetOpenResturantsCountFromSearchResultPage()
         {
-            var getOpenRestaurantsCount = await OpenRestaurantsSearchResult();
+            var getOpenRestaurantsCount = OpenRestaurantsSearchResult();
 
             StateManager.Set<int>(Result.OpenRestaurantsFromSearchResult.ToString(), getOpenRestaurantsCount.Count());
         }
@@ -110,14 +110,13 @@ namespace RestaurantSearch.UITests.Pages
             StateManager.Set(Result.OpenRestaurantsCountFromSubheader.ToString(), int.Parse(subheaderText.Split(new char[] { ' ' })[0]));
         }
 
-        public async Task GetOnscreenValidationsFromSearchResultPageAsync()
+        public void GetOnscreenValidationsFromSearchResultPage()
         {
-            StateManager.Set(Result.EmptySearchResultMessage.ToString(), await EmptySearchResultMessage());
-            StateManager.Set(Result.SearchButtonInvalidSearchText.ToString(), await SearchButtonInvalidSearchText());
-            StateManager.Set(Result.SearchButtonInvalidSearchLink.ToString(),
-                await SearchButtonInvalidSearchLink());
-            StateManager.Set(Result.TipUsOffText.ToString(), await TipUsOffText());
-            StateManager.Set(Result.TipUsOffLink.ToString(), await TipUsOffLink());
+            StateManager.Set(Result.EmptySearchResultMessage.ToString(), EmptySearchResultMessage());
+            StateManager.Set(Result.SearchButtonInvalidSearchText.ToString(), SearchButtonInvalidSearchText());
+            StateManager.Set(Result.SearchButtonInvalidSearchLink.ToString(), SearchButtonInvalidSearchLink());
+            StateManager.Set(Result.TipUsOffText.ToString(), TipUsOffText());
+            StateManager.Set(Result.TipUsOffLink.ToString(), TipUsOffLink());
         }
     }
 }

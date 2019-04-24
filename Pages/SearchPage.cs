@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using RestaurantSearch.UITests.Helpers;
 using RestaurantSearch.UITests.Models;
 using SeleniumExtras.PageObjects;
@@ -40,11 +39,11 @@ namespace RestaurantSearch.UITests.Pages
         }
 
         //Page method
-        public Task<string> PostCodeErrorMessage() => Task.FromResult(ErrorMessage.Text);
+        public string PostCodeErrorMessage() => ErrorMessage.Text;
 
-        public async Task GetErrorInformationFromSearchPageAsync()
+        public void GetErrorInformationFromSearchPage()
         {
-            StateManager.Set(Result.PostCodeErrorMessage.ToString(), await PostCodeErrorMessage());
+            StateManager.Set(Result.PostCodeErrorMessage.ToString(), PostCodeErrorMessage());
 
         }
     }
